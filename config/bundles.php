@@ -1,5 +1,7 @@
 <?php
 
+use App\BescBundle\DependencyInjection\Besc;
+
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
