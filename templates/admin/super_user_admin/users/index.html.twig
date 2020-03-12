@@ -1,0 +1,113 @@
+{% extends 'admin/super_user_admin/index.html.twig' %}
+
+{% block content %}
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Dashboard</h2>
+
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"><i class="zmdi zmdi-home"></i> Gestion</a>
+                    </li>
+                    <li class="breadcrumb-item active">Gestion des utilisateurs</li>
+                </ul>
+                <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
+                            class="zmdi zmdi-sort-amount-desc"></i></button>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <button class="btn btn-success btn-icon float-right" data-toggle="modal" data-target="#addNewAdmin"
+                        type="button">
+                    <i class="zmdi zmdi-account-add"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 c_list c_table footable footable-1 footable-paging footable-paging-center breakpoint-lg"
+                               style="">
+                            <thead>
+                            <tr class="footable-header">
+                                <th class="footable-sortable footable-first-visible" style="display: table-cell;">Nom
+                                    d'utilisateur<span class="fooicon fooicon-sort"></span></th>
+                                <th class="footable-sortable footable-first-visible" style="display: table-cell;">
+                                    Role<span class="fooicon fooicon-sort"></span></th>
+                                <th class="footable-sortable footable-first-visible" style="display: table-cell;">
+                                    Actions<span class="fooicon fooicon-sort"></span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for admin in admins %}
+                                <tr>
+                                    <td style="display: table-cell;">
+                                        <img src="assets/images/xs/avatar1.jpg" class="avatar w30" alt="">
+                                        <p class="c_name">{{ admin.username }}</p>
+                                    </td>
+                                    <td style="display: table-cell;">
+                                        <p class="c_name">{{ admin.role.label }}</p>
+                                    </td>
+
+                                    <td class="footable-last-visible" style="display: table-cell;">
+                                        <button class="btn btn-primary btn-sm">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteUser({{ admin.id }})">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#modal form#}
+        <div class="modal fade show" id="addNewAdmin">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="title" id="defaultModalLabel">Ajouter un nouvelle administrateur</h6>
+                    </div>
+                    <form method="post">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <input type="text" id="addUser_username" class="form-control" placeholder="Nom d'utilisateur">
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <input type="text" id="addUser_password" class="form-control" placeholder="Mot de passe">
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <select name="role_id" id="role_id">
+                                    <option>Selectionnez le role de l'utilisateur</option>
+                                    {% for role in roles %}
+                                        <option value="{{ role.id }}">{{ role.label }}</option>
+                                    {% endfor %}
+
+                                    <option value={area.id}>sad</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit"  id="btn_addUser" class="btn btn-success" >Enregister</button>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

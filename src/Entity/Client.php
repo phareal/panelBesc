@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,27 +59,15 @@ class Client
     private $enseigneCol;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id",referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Armateur", mappedBy="client")
      */
+    private $armateurs;
 
-    public $user;
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function __construct()
     {
-        return $this->user;
+        $this->armateurs = new ArrayCollection();
     }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user): void
-    {
-        $this->user = $user;
-    }
 
 
 
@@ -178,6 +168,37 @@ class Client
     public function setEnseigneCol(string $enseigneCol): self
     {
         $this->enseigneCol = $enseigneCol;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Armateur[]
+     */
+    public function getArmateurs(): Collection
+    {
+        return $this->armateurs;
+    }
+
+    public function addArmateur(Armateur $armateur): self
+    {
+        if (!$this->armateurs->contains($armateur)) {
+            $this->armateurs[] = $armateur;
+            $armateur->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArmateur(Armateur $armateur): self
+    {
+        if ($this->armateurs->contains($armateur)) {
+            $this->armateurs->removeElement($armateur);
+            // set the owning side to null (unless already changed)
+            if ($armateur->getClient() === $this) {
+                $armateur->setClient(null);
+            }
+        }
 
         return $this;
     }

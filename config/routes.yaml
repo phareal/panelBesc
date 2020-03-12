@@ -1,8 +1,32 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-
+dashboard:
+    path: /dashboard
+    controller: App\Controller\AdminController::index
 index:
-  path: /
-  controller: App\BescBundle\Controller\BescController::index
+    path: /
+    controller: App\Controller\AdminController::index
+login_form:
+  path: /login
+  controller: App\Controller\SecurityController::showLoginView
+
+dashboard-su:index:
+  path: /dashboard/super-user/
+  controller: App\Controller\SuperUserAdminController::index
+dashboardSuUser:
+  path: /dashboard/super-user/gestion-users
+  controller: App\Controller\SuperUserAdminController::users
+
+dashboard-su-user:add:
+  path: /dashboard/super-user/gestion-users/add
+  controller: App\Controller\SuperUserAdminController::insertUser
+dashboard-su-user:delete:
+  path: /dashboard/super-user/gestion-users/delete/{id}
+  controller: App\Controller\SuperUserAdminController::deleteUser
+
+
+
+
+logout:
+  path: /logout
+
+
 

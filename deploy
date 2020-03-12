@@ -1,0 +1,2 @@
+#!/bin/sh
+rsync -av ./ collabus@panelgestion.collabus.online:~/panelgestion --include=public/build --include=public/.htaccess --include=vendor --exclude-from=.gitignore --exclude=".*" --exclude="composer.lock"
