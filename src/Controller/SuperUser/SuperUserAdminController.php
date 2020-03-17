@@ -3,12 +3,15 @@
 namespace App\Controller\SuperUser;
 
 use App\Entity\Admin;
+use App\Entity\Armateur;
 use App\Entity\Client;
+use App\Entity\Company;
 use App\Entity\Consignataire;
 use App\Entity\Country;
 use App\Entity\Port;
 use App\Entity\Role;
 use App\Repository\AdminRepository;
+use App\Repository\ArmateurRepository;
 use App\Repository\ConsignataireRepository;
 use App\Repository\CountryRepository;
 use App\Repository\ModuleRepository;
@@ -61,6 +64,10 @@ class SuperUserAdminController extends AbstractController
      * @var ModuleRepository
      */
     private $moduleRepository;
+    /**
+     * @var ArmateurRepository
+     */
+    private $armateurRepository;
 
     public function __construct(RoleRepository $rolerepository,
                                 AdminRepository $adminRepository,
@@ -70,6 +77,7 @@ class SuperUserAdminController extends AbstractController
                                 RoleRepository $repository,
                                 UserPasswordEncoderInterface $userPasswordEncoder,
                                 ModuleRepository $moduleRepository,
+                                ArmateurRepository $armateurRepository,
                                 ConsignataireRepository $consignataireRepository)
     {
         $this->roleRepository = $rolerepository;
@@ -82,6 +90,7 @@ class SuperUserAdminController extends AbstractController
         $this->repository = $repository;
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->moduleRepository = $moduleRepository;
+        $this->armateurRepository = $armateurRepository;
     }
 
 
@@ -181,6 +190,8 @@ class SuperUserAdminController extends AbstractController
 
     }
 
+
+
     public function consignataireIndex()
     {
         $ports = $this->portRepository->findAll();
@@ -219,5 +230,39 @@ class SuperUserAdminController extends AbstractController
         return $this->json([
             'data' => $port
         ]);
+    }
+
+    public function armateurIndex(Request $request)
+    {
+        $ports = $this->portRepository->findAll();
+
+        $armateurs=$this->armateurRepository->getAll();
+        return $this->render('admin/super_user_admin/armateur/index.html.twig',compact('ports','armateurs'));
+
+    }
+    public function armateurAdd(Request $request)
+    {
+        $content=json_decode($request->getContent(),false);
+
+        $client=new Client();
+        $client->setUsername($content->username);
+        $client->setPassword($this->userPasswordEncoder->encodePassword($client,$content->password));
+        $client->setLabel($content->label);
+        $client->setIfu($content->ifu);
+        $client->setPhoneOne($content->phone_one);
+        $client->setPhoneTwo($content->phone_two);
+        $client->setMail($content->mail);
+        $client->setAddress($content->address);
+        $client->setGps($content->gps);
+        $client->setEnseigneCol($content->enseign);
+        $role=$this->roleRepository->find(2);//on lui donner le role de collaborateur
+        $client->setRoles($role);
+        $armateur=new Armateur();
+        $armateur->setClient($client);
+        $armateur->setState($content->type);
+        $this->objectManager->persist($client);
+        $this->objectManager->persist($armateur);
+        $this->objectManager->flush();
+        return new Response();
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ConteneurRepository")
  */
-class Conteneur
+class Container
 {
     /**
      * @ORM\Id()

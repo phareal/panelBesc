@@ -20,7 +20,7 @@ class DraftContainer
     /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
-    private $netWeight;
+    private $tareWeight;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,14 +37,6 @@ class DraftContainer
      * @ORM\Column(type="string", length=255)
      */
     private $company;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $agreementNumber;
-
-
-
 
     public function getId(): ?int
     {
@@ -113,22 +105,6 @@ class DraftContainer
     public function setCompany($company): void
     {
         $this->company = $company;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAgreementNumber()
-    {
-        return $this->agreementNumber;
-    }
-
-    /**
-     * @param mixed $agreementNumber
-     */
-    public function setAgreementNumber($agreementNumber): void
-    {
-        $this->agreementNumber = $agreementNumber;
     }
 
 

@@ -47,4 +47,12 @@ class ArmateurRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getAll()
+    {
+      return $this->createQueryBuilder('armateur')
+           ->select('armateur.state','armateur.id','client.label','client.id as client_id')
+          ->innerJoin('armateur.client','client')
+          ->getQuery()
+          ->getResult();
+    }
 }

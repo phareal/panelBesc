@@ -1,0 +1,163 @@
+{% extends 'admin/super_user_admin/index.html.twig' %}
+{% block content %}
+<div class="body_scroll">
+    <div class="block-header">
+        <div class="row">
+
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="body">
+                    <form method="post">
+                        <h2 class="card-inside-title">Informations de connexion ( A remplir si le consignataire devra se connecter à la plateforme)</h2>
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input type="text"  name="username" id="client_username" class="form-control" placeholder="Nom d'utilisateur">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="client_password" class="form-control" placeholder="Mot de passe">
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="card-inside-title">Informations de bases</h2>
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="label"  id="client_label" class="form-control" placeholder="Libellé">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="ifu" id="client_ifu" class="form-control" placeholder="IFU">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="phone1" id="client_phone1" class="form-control" placeholder="Phone 1">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="phone2" id="client_phone2" class="form-control" placeholder="Phone 2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="mail" id="client_mail" class="form-control" placeholder="mail">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="addresse" id="client_address" class="form-control" placeholder="addresse">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="gps" id="client_gps" class="form-control" placeholder="gps">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="client_enseigne" placeholder="Enseigne">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                <select class="select form-control" name="port_id" id="port_id">
+                                    <option value="0">Veuillez selectionnez le port auquelles est affilié l'armateur</option>
+                                    {% for port in ports %}
+                                        <option value="{{ port.id }}">{{ port.label }}</option>
+
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="armateurType" type="radio" id="simpleCompany" value="1">
+                                    <label class="form-check-label" for="inlineradio1" >Simple Compagnie</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="armateurType"  type="radio" id="simpleArmateur" value="2">
+                                    <label class="form-check-label" for="inlineradio2">Simple Armateur</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="armateurType" type="radio" id="fullArmateur" value="3">
+                                    <label class="form-check-label" for="inlineradio2">Compagnie armateur </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <input type="button" class="btn btn-success" value="AJouter l'armateur" onclick="addNewArmateur()">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2> <strong>Liste des armateurs</strong></h2>
+                        <ul class="header-dropdown">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else</a></li>
+                                </ul>
+                            </li>
+                            <li class="remove">
+                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <p>Consultez la liste des armateurs disponible</p>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+
+                                    <th>Nom de l'armateur</th>
+                                    <th>Type d'armateurs</th>
+                                    <th>#</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for armateur in armateurs %}
+                                <tr>
+
+                                    <td>{{ armateur.label }}</td>
+                                    {% if armateur.state ==1 %}
+                                    <td>
+                                        <p class="badge badge-warning">Simple Compagnie</p>
+                                    </td>
+                                    {% elseif armateur.state ==2 %}
+                                        <td><p class="badge badge-success">Simple Armateur</p></td>
+                                     {% else %}
+                                         <td><p class="badge badge-danger">Compagnie armateur</p></td>
+                                    <td>@mdo</td>
+                                     {% endif %}
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

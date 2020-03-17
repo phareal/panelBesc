@@ -46,6 +46,14 @@ dashboard-su-user:consignataire:index:
 dashboard-su-user:conteneur:index:
   path: /dashboard/super-user/gestion-conteneurs
   controller: App\Controller\SuperUser\SuperUserAdminController::containerIndex
+
+dashboard-su-user:armateur:index:
+  path: /dashboard/super-user/gestion-armateurs
+  controller: App\Controller\SuperUser\SuperUserAdminController::armateurIndex
+dashboard-su-user:armateur:add:
+  path: /dashboard/super-user/gestion-armateurs/ajouter
+  controller: App\Controller\SuperUser\SuperUserAdminController::armateurAdd
+
 dashboard-su-user:country:
   path: /dashboard/super-user/country
   controller: App\Controller\SuperUser\SuperUserAdminController::getcountryList

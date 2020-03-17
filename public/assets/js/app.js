@@ -110,6 +110,35 @@ function addNewConsignataire() {
     })
 }
 
+function addNewArmateur() {
+
+
+    var armateur = {
+        username:document.querySelector("#client_username").value,
+        password:document.querySelector("#client_password").value,
+        label:document.querySelector("#client_label").value,
+        ifu:document.querySelector("#client_ifu").value,
+        phone_one:document.querySelector("#client_phone1").value,
+        phone_two:document.querySelector("#client_phone2").value,
+        mail:document.querySelector("#client_mail").value,
+        address:document.querySelector("#client_address").value,
+        gps:document.querySelector("#client_gps").value,
+        enseign:document.querySelector("#client_enseigne").value,
+        role:1,
+        type:document.querySelector('input[name="armateurType"]:checked').value
+    }
+
+    fetch('/dashboard/super-user/gestion-armateurs/ajouter',{
+        method:'POST',
+        body: JSON.stringify(armateur)
+    }).then(success=>{
+
+    }).catch(failure=>{
+
+    })
+
+}
+
 function addContainer() {
     var body = {
 

@@ -22,6 +22,11 @@ class Armateur
      */
     private $client;
 
+    /**
+     * @ORM\Column(type="integer")
+     * */
+    private $state;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,4 +43,22 @@ class Armateur
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param mixed $state
+     */
+    public function setState($state): void
+    {
+        $this->state = $state;
+    }
+
+
 }
