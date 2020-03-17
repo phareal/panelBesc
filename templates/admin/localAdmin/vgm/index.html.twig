@@ -49,25 +49,25 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ path('dashboard-su-user:country') }}" class="toggled waves-effect waves-block">
+                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-globe"></i><span>
                                 Pays</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ path('dashboard-su-user:port') }}" class="toggled waves-effect waves-block">
+                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-local-shipping"></i><span>
                                 Port</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ path('dashboard-su-user:conteneur:index') }}" class="toggled waves-effect waves-block">
+                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-local-shipping"></i><span>
                                 Conteneur</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ path('dashboard-su-user:consignataire:index') }}" class="toggled waves-effect waves-block">
+                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-accounts-list-alt"></i><span>
                                 Consignataires</span>
                         </a>
@@ -78,52 +78,4 @@
         </div>
     </aside>
 {% endblock %}
-{% block content %}
 
-    <div class="block-header">
-        <div class="row">
-            <div class="col-lg-7 col-md-6 col-sm-12">
-                <h2>Dashboard</h2>
-
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="index.html"><i class="zmdi zmdi-home"></i> Gestion</a>
-                    </li>
-                </ul>
-                <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
-                            class="zmdi zmdi-sort-amount-desc"></i></button>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="row clearfix">
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card widget_2 big_icon traffic">
-                    <div class="body">
-                        <h6>Roles</h6>
-                        <h2>12% <small class="info">of 100</small></h2>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card widget_2 big_icon sales">
-                    <div class="body">
-                        <h6>Utilisateurs</h6>
-                        <h2>12% <small class="info">of 100</small></h2>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card widget_2 big_icon domains">
-                    <div class="body">
-                        <h6>Modules</h6>
-                        <h2>8 <small class="info">of 10</small></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}

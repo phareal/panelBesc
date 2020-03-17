@@ -5,6 +5,13 @@ security:
             entity:
                 class: App\Entity\Admin
                 property: username
+        local_admin:
+            entity:
+                class: App\Entity\Client
+                property: username
+        chain_provider:
+            chain:
+                providers: [from_database, local_admin]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -12,7 +19,7 @@ security:
         main:
             anonymous: lazy
 
-            provider: from_database
+            provider: chain_provider
 
             logout:
                 path: /logout
@@ -29,6 +36,22 @@ security:
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+        client_auth:
+
+            pattern: ^/dashboard/local-admin
+
+
+            provider: from_database
+
+            logout:
+                path: /local/logout
+
+                target: /dashboard/local-admin/login
+
+            form_login:
+                login_path: dashboard-local:login
+                check_path: dashboard-local:login
+                default_target_path: dashboard-local:index
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
@@ -37,5 +60,8 @@ security:
          - { path: ^/profile, roles: ROLE_USER }
     encoders:
         App\Entity\Admin:
+            algorithm: bcrypt
+            cost: 12
+        App\Entity\Client:
             algorithm: bcrypt
             cost: 12

@@ -1,0 +1,45 @@
+{% extends 'admin/super_user_admin/index.html.twig' %}
+{% block content %}
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Liste des pays</strong>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Code du Pays</th>
+                                        <th>Nom du Pays</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for country in countryList %}
+                                    <tr>
+                                        <th scope="row">{{ country.id }}</th>
+                                        <td>{{ country.countryCode }}</td>
+                                        <td>{{ country.countryName }}</td>
+
+
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

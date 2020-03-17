@@ -1,0 +1,81 @@
+{% extends 'admin/super_user_admin/index.html.twig' %}
+{% block content %}
+<div class="body_scroll">
+    <div class="block-header">
+        <div class="row">
+
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Gestion des ports</strong>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2><strong>Ajouter un nouveau port</strong></h2>
+                </div>
+                <div class="body">
+                    <p>Veuillez entrer le nom du port et selectinnez le pays affilier</p>
+                   <form method="post" action="{{ path('dashboard-su-user:port:add') }}">
+                       <div class="form-group">
+                           <input type="text" id="portName" class="form-control" placeholder="Nom du port">
+                       </div>
+                       <div class="form-group">
+                          <select class="form-control" id="countryId">
+
+                              <option>Selectionnez le pays</option>
+                              {% for country in countryList %}
+                                 <option value="{{ country.id }}">{{ country.countryName }}</option>
+                              {% endfor %}
+                          </select>
+
+                       </div>
+                       <div class="form-group">
+                           <button type="submit" class="btn btn-success" onclick="addNewPort()">
+                               Enregistrer
+                               <i class="zmdi zmdi-check"></i>
+                           </button>
+                       </div>
+                   </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2><strong>Basic Table</strong></h2>
+                </div>
+                <div class="body">
+                    <p>Basic example without any additional modification classes</p>
+                    <div class="table-responsive">
+                        <table class="table" id="portTable">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom du port</th>
+                                <th>Pays</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for port in ports %}
+                                <tr>
+                                    <th scope="row">{{ port.id }}</th>
+                                    <td>{{ port.label }}</td>
+                                    <td>{{ port.country.countryName }}</td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

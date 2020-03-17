@@ -22,17 +22,20 @@ class Consignataire
      */
     private $client;
 
+
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClient(): ?string
+    public function getClient(): ?Client
     {
         return $this->client;
     }
 
-    public function setClient(string $client): self
+    public function setClient($client): self
     {
         $this->client = $client;
 

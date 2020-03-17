@@ -1,2 +1,2 @@
 #!/bin/sh
-rsync -av ./ collabus@panelgestion.collabus.online:~/panelgestion --include=public/build --include=public/.htaccess --include=vendor --exclude-from=.gitignore --exclude=".*" --exclude="composer.lock"
+rsync -av ./ businesspay@92.222.85.200:~/panelgestion.businesspay.online --include=public/.htaccess --include=vendor --exclude-from=.gitignore --exclude=".*" --exclude="composer.lock"

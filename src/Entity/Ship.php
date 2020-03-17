@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RoleRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ShipRepository")
  */
-class Role 
+class Ship
 {
     /**
      * @ORM\Id()
@@ -37,7 +37,4 @@ class Role
 
         return $this;
     }
-
-
-
 }

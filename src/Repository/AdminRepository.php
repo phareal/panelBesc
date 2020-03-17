@@ -19,6 +19,23 @@ class AdminRepository extends ServiceEntityRepository
         parent::__construct($registry, Admin::class);
     }
 
+    public function getLocalAdministrator(){
+        return $this->createQueryBuilder('admin')
+            ->where('admin.role = 3')
+            ->orWhere('admin.role = 6')
+            ->orWhere('admin.role = 7')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function getAffiliatedModule($id){
+        return $this->createQueryBuilder('admin_module')
+            ->where('admin_module.modules ')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Admin[] Returns an array of Admin objects
     //  */

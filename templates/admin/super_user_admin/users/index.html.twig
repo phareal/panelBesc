@@ -87,13 +87,22 @@
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                <select name="role_id" id="role_id">
+                                <select name="role_id" id="role_id" class="form-control">
                                     <option>Selectionnez le role de l'utilisateur</option>
                                     {% for role in roles %}
                                         <option value="{{ role.id }}">{{ role.label }}</option>
                                     {% endfor %}
 
                                     <option value={area.id}>sad</option>
+
+                                </select>
+                            </div>
+                            <div class="row clearfix my-3">
+                                <select name="module_id" id="module_id" class="form-control">
+                                    <option>Selectionnez le module affiflier si c'est un admin local</option>
+                                    {% for module in modules %}
+                                        <option value="{{ module.id }}">{{ module.label }}</option>
+                                    {% endfor %}
 
                                 </select>
                             </div>

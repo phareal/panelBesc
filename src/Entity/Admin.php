@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -43,6 +44,33 @@ class Admin implements UserInterface,\Serializable
     private $password;
 
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Module",inversedBy="admins")
+     * @ORM\JoinTable(name="admin_module")
+     */
+    protected $modules;
+
+    public function __construct()
+    {
+        $this->modules=new ArrayCollection();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getModules()
+    {
+        return $this->modules;
+    }
+
+
+    public function attachModule(Module $module){
+        $this->modules->add($module);
+    }
+
+    public function removeModule(Module $module){
+        $this->modules->removeElement($module);
+    }
 
     public function getId(): ?int
     {
@@ -61,6 +89,7 @@ class Admin implements UserInterface,\Serializable
     public function unserialize($serialized)
     {
         list($this->id, $this->username, $this->password,)=unserialize($serialized,['allowed_classes'=>false]);
+
     }
 
     public function getRoles()

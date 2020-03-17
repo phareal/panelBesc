@@ -1,0 +1,46 @@
+{% extends 'admin/super_user_admin/index.html.twig' %}
+{% block content %}
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Ajouter un nouveau conteneur</strong>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <form method="post">
+
+                                <h2 class="card-inside-title">Informations de bases</h2>
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <input type="text" placeholder="Nom de la compagnie" id="companyName" class="form-control col-sm-6">
+                                    </div>
+                                </div>
+                                <div class="row clearfix my-4">
+                                    <input type="text" id="cargoType" placeholder="Type de cargo" class="form-control col-sm-6">
+                                </div>
+                                <div class="row clearfix my-4">
+                                    <input type="text"  placeholder="Taille du conteneur" id="containerSize" class="form-control col-sm-6">
+                                </div>
+                                <div class="row clearfix my-4">
+                                    <input type="text" placeholder="Poids net" id="netWeight" class="form-control col-sm-6">
+                                </div>
+                                <div class="row clearfix my-4">
+                                    <input type="text" placeholder="Numero d'agrement" id="agrement" class="form-control col-sm-6">
+                                </div>
+                                <button type="submit" class="btn btn-success" onclick="">Ajouter</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

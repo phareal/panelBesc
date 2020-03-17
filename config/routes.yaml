@@ -10,20 +10,71 @@ login_form:
 
 dashboard-su:index:
   path: /dashboard/super-user/
-  controller: App\Controller\SuperUserAdminController::index
+  controller: App\Controller\SuperUser\SuperUserAdminController::index
+
+
+#Modules controlleer
+dashboard-su:moduleParams:
+  path: /dashboard/super-user/modules/globals-parameters
+  controller:  App\Controller\SuperUser\ModulesController::paramsIndex
+
+dashboard-su:vgm:index:
+  path: /dashboard/super-user/modules/vgm
+  controller: App\Controller\SuperUser\ModulesController::vgmIndex
+
+dashboard-su:vgm:attach:
+  path: /dashboard/super-user/modules/vgm/{module_id}/attach/{admin_id}
+  controller: App\Controller\SuperUser\ModulesController::addAdminToVGM
+
+
+
 dashboardSuUser:
   path: /dashboard/super-user/gestion-users
-  controller: App\Controller\SuperUserAdminController::users
+  controller: App\Controller\SuperUser\SuperUserAdminController::users
 
 dashboard-su-user:add:
   path: /dashboard/super-user/gestion-users/add
-  controller: App\Controller\SuperUserAdminController::insertUser
+  controller: App\Controller\SuperUser\SuperUserAdminController::insertUser
+
+dashboard-su-user:consignataire:add:
+  path: /dashboard/super-user/gestion-consignataire/add
+  controller: App\Controller\SuperUser\SuperUserAdminController::addConsignataire
+
+dashboard-su-user:consignataire:index:
+  path: /dashboard/super-user/gestion-consignataire
+  controller: App\Controller\SuperUser\SuperUserAdminController::consignataireIndex
+dashboard-su-user:conteneur:index:
+  path: /dashboard/super-user/gestion-conteneurs
+  controller: App\Controller\SuperUser\SuperUserAdminController::containerIndex
+dashboard-su-user:country:
+  path: /dashboard/super-user/country
+  controller: App\Controller\SuperUser\SuperUserAdminController::getcountryList
+
+dashboard-su-user:port:
+  path: /dashboard/super-user/port
+  controller: App\Controller\SuperUser\SuperUserAdminController::getAllShippingPort
+dashboard-su-user:port:add:
+  path: /dashboard/super-user/port/add
+  controller: App\Controller\SuperUser\SuperUserAdminController::AddShippingPort
+
+
 dashboard-su-user:delete:
   path: /dashboard/super-user/gestion-users/delete/{id}
-  controller: App\Controller\SuperUserAdminController::deleteUser
+  controller: App\Controller\SuperUser\SuperUserAdminController::deleteUser
+
+dashboard-local:vgm:index:
+  path: /dashboard/vgm/
+  controller: App\vgm\src\Controller\VGMController::index
 
 
+dashboard-local:login:
+  path: /dashboard/local-admin/login
+  controller: App\Controller\local\LocalAdminController::showLoginForm
 
+
+dashboard-local:index:
+  path: /dashboard/local-admin
+  controller: App\Controller\local\LocalAdminController::index
 
 logout:
   path: /logout

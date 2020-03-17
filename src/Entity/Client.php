@@ -5,11 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ *  @ORM\Table(name="client")
  */
-class Client
+class Client implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -63,12 +65,41 @@ class Client
      */
     private $armateurs;
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role")
+     */
+
+    private $roles;
+
+    /**
+     * @ORM\Column(type="string",length=55)
+     */
+    private $username;
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $password;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Role")
+     * @ORM\JoinColumn(name="role_id",referencedColumnName="id")
+     */
+    public $role;
+
     public function __construct()
     {
         $this->armateurs = new ArrayCollection();
+        $this->roles=new ArrayCollection();
     }
 
+    public function setUsername($username){
+        $this->username=$username;
+    }
 
+    public function setPassword($password){
+        $this->password=$password;
+    }
 
 
     public function getId(): ?int
@@ -202,4 +233,45 @@ class Client
 
         return $this;
     }
+
+    public function serialize()
+    {
+       return serialize([$this->id,$this->username,$this->password]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list($this->id, $this->username, $this->password,)=unserialize($serialized,['allowed_classes'=>false]);
+    }
+
+    public function getRoles()
+    {
+        return [$this->role->getLabel()];
+    }
+
+    public function setRoles($role){
+        $this->role=$role;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+
 }

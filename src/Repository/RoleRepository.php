@@ -24,6 +24,13 @@ class RoleRepository extends ServiceEntityRepository
         return $this->findAll();
     }
 
+    public function getManagerRoles(){
+        return $this->createQueryBuilder('roles')
+            ->where('roles.id != 5 ')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Role[] Returns an array of Role objects
     //  */

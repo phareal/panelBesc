@@ -1,0 +1,147 @@
+{% extends 'admin/super_user_admin/index.html.twig' %}
+{% block content %}
+    <div class="body_scroll">
+        <div class="block-header">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Selectionnez un consignataire pre-existant</strong>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <form method="post">
+
+                            <h2 class="card-inside-title">Informations de bases</h2>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <select class="select form-control" name="port_id">
+
+                                        <option class="" value="0">Veuillez selectionnez le consignataire</option>
+                                        {% if consignataires|length >0 %}
+                                            {% for consignataire in consignataires %}
+                                                <option value="{{ consignataire.id }}">{{ consignataire.client.username }}</option>
+                                            {% endfor %}
+                                          {% else %}
+                                              <option class="" value="0">Veuillez selectionnez le consignataire</option>
+                                              <option value="0" disabled>Aucun consignataire</option>
+                                        {% endif %}
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row clearfix my-4">
+                                <div class="col-sm-12">
+                                    <select class="select form-control" name="port_id">
+                                        <option class="" value="0">Veuillez selectionnez le port auquelles est affilié le consignataire</option>
+                                        {% for port in ports %}
+                                            <option value="{{ port.id }}">{{ port.label }}</option>
+
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row clearfix my-4">
+                                <input type="button" class="btn btn-success" value="AJouter le consignataire" onclick="addNewConsignataire()">
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Ajout d'un nouvel consignataire</strong>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <form method="post">
+                                <h2 class="card-inside-title">Informations de connexion</h2>
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <input type="text"  name="username" id="client_username" class="form-control" placeholder="Nom d'utilisateur">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" id="client_password" class="form-control" placeholder="Mot de passe">
+                                        </div>
+                                    </div>
+                                </div>
+                                <h2 class="card-inside-title">Informations de bases</h2>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="label"  id="client_label" class="form-control" placeholder="Libellé">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="ifu" id="client_ifu" class="form-control" placeholder="IFU">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="phone1" id="client_phone1" class="form-control" placeholder="Phone 1">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="phone2" id="client_phone2" class="form-control" placeholder="Phone 2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" name="mail" id="client_mail" class="form-control" placeholder="mail">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" name="addresse" id="client_address" class="form-control" placeholder="addresse">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="gps" id="client_gps" class="form-control" placeholder="gps">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="client_enseigne" placeholder="Enseigne">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <select class="select form-control" name="port_id" id="port_id">
+                                            <option value="0">Veuillez selectionnez le port auquelles est affilié le consignataire</option>
+                                            {% for port in ports %}
+                                                <option value="{{ port.id }}">{{ port.label }}</option>
+
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <input type="button" class="btn btn-success" value="AJouter le consignataire" onclick="addNewConsignataire()">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -30,7 +30,7 @@ class RoleFixtures extends Fixture
         $manager->persist($powerUser);
 
         $superUser=new Role();
-        $superUser->setLabel("super user");
+        $superUser->setLabel("ROLE_SUPER)");
         $manager->persist($superUser);
 
         $manager->flush();
