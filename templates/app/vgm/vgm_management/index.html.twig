@@ -1,0 +1,58 @@
+{% extends 'app/vgm/index.html.twig' %}
+
+{% block content %}
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Dashboard</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"><i class="zmdi zmdi-home"></i> Gestion des vgm</a>
+                    </li>
+                    <li class="breadcrumb-item active">Parametres du vgm</li>
+                </ul>
+                <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
+                            class="zmdi zmdi-sort-amount-desc"></i></button>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <button class="btn btn-success btn-icon float-right" data-toggle="modal" data-target="#addUserToModule"
+                        type="button">
+                    <i class="zmdi zmdi-account-add"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card w_data_1">
+                    <div class="body">
+                        <div class="w_icon indigo"><i class="zmdi zmdi-settings"></i></div>
+                        <h4 class="mt-3">45.8k</h4>
+                        <span class="text-muted">Nombre total de VGM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card w_data_1">
+                    <div class="body">
+                        <div class="w_icon pink"><i class="zmdi zmdi-bug"></i></div>
+                        <h4 class="mt-3">12.1k</h4>
+                        <span class="text-muted">Nombre d'admin</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card w_data_1">
+                    <div class="body">
+                        <div class="w_icon orange"><i class="zmdi zmdi-shopping-cart"></i></div>
+                        <h4 class="mt-3">53.8k</h4>
+                        <span class="text-muted">Nombre totales de conteneur</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

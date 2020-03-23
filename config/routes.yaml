@@ -13,17 +13,14 @@ dashboard-su:index:
   controller: App\Controller\SuperUser\SuperUserAdminController::index
 
 
-#Modules controlleer
-dashboard-su:moduleParams:
-  path: /dashboard/super-user/modules/globals-parameters
-  controller:  App\Controller\SuperUser\ModulesController::paramsIndex
+
 
 dashboard-su:vgm:index:
-  path: /dashboard/super-user/modules/vgm
+  path: /dashboard/super-user/modules/management
   controller: App\Controller\SuperUser\ModulesController::vgmIndex
 
 dashboard-su:vgm:attach:
-  path: /dashboard/super-user/modules/vgm/{module_id}/attach/{admin_id}
+  path: /dashboard/super-user/modules/management/{module_id}/attach/{admin_id}
   controller: App\Controller\SuperUser\ModulesController::addAdminToVGM
 
 
@@ -36,6 +33,14 @@ dashboard-su-user:add:
   path: /dashboard/super-user/gestion-users/add
   controller: App\Controller\SuperUser\SuperUserAdminController::insertUser
 
+dashboard-su-user:cargoType:
+  path: /dashboard/super-user/gestion-cargo
+  controller: App\Controller\SuperUser\SuperUserAdminController::indexCargoType
+
+dashboard-su-user:cargoTtype:add:
+  path: /dashboard/super-user/gestion-cargo
+  controller: App\Controller\SuperUser\SuperUserAdminController::addCargoType
+
 dashboard-su-user:consignataire:add:
   path: /dashboard/super-user/gestion-consignataire/add
   controller: App\Controller\SuperUser\SuperUserAdminController::addConsignataire
@@ -47,9 +52,15 @@ dashboard-su-user:conteneur:index:
   path: /dashboard/super-user/gestion-conteneurs
   controller: App\Controller\SuperUser\SuperUserAdminController::containerIndex
 
+dashboard-su-user:conteneur:add:
+  path: /dashboard/super-user/gestion-conteneurs/ajouter
+  controller: App\Controller\SuperUser\SuperUserAdminController::insertConteneur
+
 dashboard-su-user:armateur:index:
   path: /dashboard/super-user/gestion-armateurs
   controller: App\Controller\SuperUser\SuperUserAdminController::armateurIndex
+
+
 dashboard-su-user:armateur:add:
   path: /dashboard/super-user/gestion-armateurs/ajouter
   controller: App\Controller\SuperUser\SuperUserAdminController::armateurAdd
@@ -61,6 +72,8 @@ dashboard-su-user:country:
 dashboard-su-user:port:
   path: /dashboard/super-user/port
   controller: App\Controller\SuperUser\SuperUserAdminController::getAllShippingPort
+
+
 dashboard-su-user:port:add:
   path: /dashboard/super-user/port/add
   controller: App\Controller\SuperUser\SuperUserAdminController::AddShippingPort
@@ -72,7 +85,21 @@ dashboard-su-user:delete:
 
 dashboard-local:vgm:index:
   path: /dashboard/vgm/
-  controller: App\vgm\src\Controller\VGMController::index
+  controller: App\Controller\App\vgm\VGMController::index
+
+dashboard-local:vgm:management:index:
+  path: /dashboard/vgm/gestion-vgm/
+  controller: App\Controller\App\vgm\VGMManagementController::index
+
+
+dasboard-local:vgm:compagnie:index:
+  path:  /dashboard/vgm/gestion-compagnie/
+  controller: App\Controller\App\vgm\VGMController::showCompagnie
+
+
+dashboard-local:vgm:management:createIndex:
+  path: /dashboard/vgm/gestion-vgm/create
+  controller: App\Controller\App\vgm\VGMManagementController::createVGM
 
 
 dashboard-local:login:

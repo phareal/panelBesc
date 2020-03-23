@@ -47,4 +47,16 @@ class DraftContainerRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function customFindAll(){
+        return $this->createQueryBuilder('container')
+            ->select('container.id','container.tareWeight','container.containerSize','cargoType.label','container.proprietaireCode','container.registerNumber','container.verificationNumber')
+            ->innerJoin('container.armateur','armateur')
+            ->innerJoin('container.cargoType','cargoType')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
 }

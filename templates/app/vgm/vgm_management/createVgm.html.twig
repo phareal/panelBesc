@@ -1,0 +1,32 @@
+{% extends 'app/vgm/index.html.twig' %}
+
+{% block content %}
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Dashboard</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"><i class="zmdi zmdi-home"></i> Gestion des vgm</a>
+                    </li>
+                    <li class="breadcrumb-item active">Creation de la VGM</li>
+                </ul>
+                <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
+                            class="zmdi zmdi-sort-amount-desc"></i></button>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <button class="btn btn-success btn-icon float-right" data-toggle="modal" data-target="#addUserToModule"
+                        type="button">
+                    <i class="zmdi zmdi-account-add"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row clearfix">
+
+        </div>
+    </div>
+
+{% endblock %}
+

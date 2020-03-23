@@ -40,7 +40,14 @@ class AdminController extends AbstractController
             if ($roles[0]=="ROLE_SUPER"){
                return $this->redirectToRoute('dashboard-su:index');
             }else if ($roles[0]=="local administrator"){
-              return  $this->redirectToRoute('dashboard-local:index');
+                switch ($this->getUser()->module->getId()){
+                    case 1 :
+                        return  $this->redirectToRoute('dashboard-local:vgm:index');
+                        break;
+                    case 2 :
+                        return  $this->redirectToRoute('dashboard-local:index');
+                }
+
             }
         }else{
             return $this->redirectToRoute('login_form');

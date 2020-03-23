@@ -8,7 +8,8 @@
             </a>
         </div>
         <div class="menu">
-            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: calc(100vh - 65px);"><ul class="list" style="overflow: hidden; width: auto; height: calc(100vh - 65px);">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: calc(100vh - 65px);">
+                <ul class="list" style="overflow: hidden; width: auto; height: calc(100vh - 65px);">
                     <li>
                         <div class="user-info">
                             <a class="image waves-effect waves-block" href="profile.html">
@@ -25,9 +26,30 @@
                             <i class="zmdi zmdi-home"></i><span>Dashboard</span></a>
                     </li>
                     <li>
-                    <li class="open">
-                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
-                            <i class="zmdi zmdi-accounts-list"></i><span>Autres admins</span></a>
+
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="zmdi zmdi-grid"></i><span>VGM</span></a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{{ path('dashboard-local:vgm:management:index') }}">Liste des VGM</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('dashboard-local:vgm:management:createIndex') }}">Creer une VGM</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="zmdi zmdi-grid"></i><span>Collaborateurs</span></a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{{ path('dashboard-local:vgm:management:index') }}">Agent certificateur</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('dashboard-local:vgm:management:createIndex') }}">Agent Validateur</a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="open">
                         <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
@@ -35,7 +57,15 @@
                     </li>
                     <li class="open">
                         <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
-                            <i class="zmdi zmdi-view-list-alt"></i><span>VGM</span></a>
+                            <i class="zmdi zmdi-accounts-list"></i><span>Port</span></a>
+                    </li>
+                    <li class="open">
+                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
+                            <i class="zmdi zmdi-accounts-list"></i><span>Compagnie</span></a>
+                    </li>
+                    <li class="open">
+                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
+                            <i class="zmdi zmdi-accounts-list"></i><span>Armateurs</span></a>
                     </li>
                     <li>
                 </ul>
@@ -50,12 +80,17 @@
                 <h2>Dashboard</h2>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="index.html"><i class="zmdi zmdi-home"></i> Gestion</a>
+                        <a href="index.html">
+                            <i class="zmdi zmdi-home"></i>
+                            Gestion
+                        </a>
                     </li>
-                    <li class="breadcrumb-item active">Parametres du vgm</li>
+                    <li class="breadcrumb-item active">
+                        Parametres du vgm
+                    </li>
                 </ul>
-                <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
-                            class="zmdi zmdi-sort-amount-desc"></i></button>
+                <button class="btn btn-primary btn-icon mobile_menu" type="button">
+                    <i class="zmdi zmdi-sort-amount-desc"></i></button>
             </div>
             <div class="col-lg-5 col-md-6 col-sm-12">
                 <button class="btn btn-success btn-icon float-right" data-toggle="modal" data-target="#addUserToModule"
@@ -95,6 +130,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row clearfix">
+
         </div>
     </div>
 

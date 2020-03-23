@@ -52,7 +52,7 @@ function attachUserToVGM(){
         user_id:user_id,
         module_id:1,
     }
-    fetch('/dashboard/super-user/modules/vgm/' +1 + '/attach/' + user_id, {
+    fetch('/dashboard/super-user/modules/management/' +1 + '/attach/' + user_id, {
         method: "POST",
         body: JSON.stringify(params)
     }).then(r =>{
@@ -141,6 +141,24 @@ function addNewArmateur() {
 
 function addContainer() {
     var body = {
-
+        armateur_id:document.querySelector("#armateur_id").value,
+        cargoType:document.querySelector("#cargoType").value,
+        containerSize:document.querySelector("#containerSize").value,
+        tareWeight:document.querySelector("#tareWeight").value,
+        type:document.querySelector("#cargoType").value,
+        groupCode:document.querySelector("#groupCode").value,
+        registerNumber:document.querySelector("#registerNumber").value,
+        verificationCode:document.querySelector("#verificationCode").value,
+        proprietaryCode:document.querySelector("#proprietaryCode").value
     }
+
+    fetch('/dashboard/super-user/gestion-conteneurs/ajouter',{
+        method:"POST",
+        body:JSON.stringify(body)
+    }).then(success=>{
+
+    }).catch(failure=>{
+
+    })
 }
+

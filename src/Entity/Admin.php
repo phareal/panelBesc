@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -31,7 +32,12 @@ class Admin implements UserInterface,\Serializable
 
     public $role;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Module")
+     * @ORM\JoinColumn(name="module_id",referencedColumnName="id")
+     */
 
+    public $module;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -43,16 +49,17 @@ class Admin implements UserInterface,\Serializable
      */
     private $password;
 
-
     /**
-     * @ORM\ManyToMany(targetEntity="Module",inversedBy="admins")
-     * @ORM\JoinTable(name="admin_module")
+     * @ORM\OneToMany(targetEntity="App\Entity\OtherAdmin", mappedBy="admin", orphanRemoval=true)
      */
-    protected $modules;
+    private $otherAdmins;
+
+
 
     public function __construct()
     {
         $this->modules=new ArrayCollection();
+        $this->otherAdmins = new ArrayCollection();
     }
 
     /**
@@ -135,6 +142,37 @@ class Admin implements UserInterface,\Serializable
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OtherAdmin[]
+     */
+    public function getOtherAdmins(): Collection
+    {
+        return $this->otherAdmins;
+    }
+
+    public function addOtherAdmin(OtherAdmin $otherAdmin): self
+    {
+        if (!$this->otherAdmins->contains($otherAdmin)) {
+            $this->otherAdmins[] = $otherAdmin;
+            $otherAdmin->setAdmin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOtherAdmin(OtherAdmin $otherAdmin): self
+    {
+        if ($this->otherAdmins->contains($otherAdmin)) {
+            $this->otherAdmins->removeElement($otherAdmin);
+            // set the owning side to null (unless already changed)
+            if ($otherAdmin->getAdmin() === $this) {
+                $otherAdmin->setAdmin(null);
+            }
+        }
 
         return $this;
     }

@@ -1,5 +1,4 @@
 {% extends 'admin/super_user_admin/index.html.twig' %}
-
 {% block sidebar %}
     <aside id="leftsidebar" class="sidebar">
         <div class="navbar-brand">
@@ -27,7 +26,7 @@
                     <li class="">
                         <a href="{{ path('dashboardSuUser') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-accounts-list"></i>
-                            <span>Utilisateurs</span>
+                            <span>Autres administrateurs</span>
                         </a>
                     </li>
                     <li class="">
@@ -37,29 +36,42 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
+                        <a href="{{ path('dashboard-su-user:country') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-globe"></i><span>
                                 Pays</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
+                        <a href="{{ path('dashboard-su-user:port') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-local-shipping"></i><span>
                                 Port</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
+                        <a href="{{ path('dashboard-su-user:armateur:index') }}" class="toggled waves-effect waves-block">
+                            <i class="zmdi zmdi-accounts-list-alt"></i><span>
+                                Armateurs</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('dashboard-su-user:conteneur:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-local-shipping"></i><span>
                                 Conteneur</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
+                        <a href="{{ path('dashboard-su-user:consignataire:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-accounts-list-alt"></i><span>
                                 Consignataires</span>
                         </a>
                     </li>
+                    <li class="">
+                        <a href="{{ path('dashboard-su-user:consignataire:index') }}" class="toggled waves-effect waves-block">
+                            <i class="zmdi zmdi-accounts-list-alt"></i><span>
+                                Types de cargo</span>
+                        </a>
+                    </li>
+                    <li>
                     <li>
                 </ul>
             </div>

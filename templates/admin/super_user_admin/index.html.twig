@@ -27,11 +27,7 @@
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                             <i class="zmdi zmdi-apps"></i><span>Modules</span></a>
                         <ul class="ml-menu">
-                            <li>
-                                <a href="{{ path('dashboard-su:moduleParams') }}" class=" waves-effect waves-block">Paramètres de bases</a>
-                            </li>
                             <li><a href="mail-inbox.html" class=" waves-effect waves-block">Besc</a></li>
-                            <li><a href="{{ path('dashboard-su:vgm:index') }}" class=" waves-effect waves-block">VGM</a></li>
                             <li><a href="events.html" class=" waves-effect waves-block">BOURSE DU FRET</a></li>
                             <li><a href="contact.html" class=" waves-effect waves-block">TRADEPOINT</a></li>
                         </ul>
@@ -78,9 +74,13 @@
                                 Consignataires</span>
                         </a>
                     </li>
+                    <li class="">
+                        <a href="{{ path('dashboard-su-user:consignataire:index') }}" class="toggled waves-effect waves-block">
+                            <i class="zmdi zmdi-accounts-list-alt"></i><span>
+                                Types de cargo</span>
+                        </a>
+                    </li>
                     <li>
-
-
                     <li>
                 </ul>
             </div>

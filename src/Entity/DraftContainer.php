@@ -16,16 +16,12 @@ class DraftContainer
      */
     private $id;
 
-
     /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
     private $tareWeight;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $cargoType;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -34,30 +30,39 @@ class DraftContainer
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="Armateur")
+     */
+    public $armateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CargoType")
+     */
+
+    public $cargoType;
+
+    /**
+     * @ORM\Column(type="string", length=255,unique=true)
+     */
+    private $proprietaireCode;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $goodCode;
+    /**
      * @ORM\Column(type="string", length=255)
      */
-    private $company;
+    private $registerNumber;
+    /**
+     * @ORM\Column(type="integer", length=10)
+     */
+    private $verificationNumber;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getNetWeight()
-    {
-        return $this->netWeight;
-    }
-
-    /**
-     * @param mixed $netWeight
-     */
-    public function setNetWeight($netWeight): void
-    {
-        $this->netWeight = $netWeight;
-    }
 
     /**
      * @return mixed
@@ -94,18 +99,103 @@ class DraftContainer
     /**
      * @return mixed
      */
-    public function getCompany()
+    public function getTareWeight()
     {
-        return $this->company;
+        return $this->tareWeight;
     }
 
     /**
-     * @param mixed $company
+     * @param mixed $tareWeight
      */
-    public function setCompany($company): void
+    public function setTareWeight($tareWeight): void
     {
-        $this->company = $company;
+        $this->tareWeight = $tareWeight;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getArmateur()
+    {
+        return $this->armateur;
+    }
+
+    /**
+     * @param mixed $armateur
+     */
+    public function setArmateur($armateur): void
+    {
+        $this->armateur = $armateur;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProprietaireCode()
+    {
+        return $this->proprietaireCode;
+    }
+
+    /**
+     * @param mixed $proprietaireCode
+     */
+    public function setProprietaireCode($proprietaireCode): void
+    {
+        $this->proprietaireCode = $proprietaireCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGoodCode()
+    {
+        return $this->goodCode;
+    }
+
+    /**
+     * @param mixed $goodCode
+     */
+    public function setGoodCode($goodCode): void
+    {
+        $this->goodCode = $goodCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegisterNumber()
+    {
+        return $this->registerNumber;
+    }
+
+    /**
+     * @param mixed $registerNumber
+     */
+    public function setRegisterNumber($registerNumber): void
+    {
+        $this->registerNumber = $registerNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVerificationNumber()
+    {
+        return $this->verificationNumber;
+    }
+
+    /**
+     * @param mixed $verificationNumber
+     */
+    public function setVerificationNumber($verificationNumber): void
+    {
+        $this->verificationNumber = $verificationNumber;
+    }
+
+
+
+
+
 
 
 

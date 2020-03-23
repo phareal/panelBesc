@@ -4,16 +4,20 @@ namespace App\Controller\SuperUser;
 
 use App\Entity\Admin;
 use App\Entity\Armateur;
+use App\Entity\CargoType;
 use App\Entity\Client;
 use App\Entity\Company;
 use App\Entity\Consignataire;
 use App\Entity\Country;
+use App\Entity\DraftContainer;
 use App\Entity\Port;
 use App\Entity\Role;
 use App\Repository\AdminRepository;
 use App\Repository\ArmateurRepository;
+use App\Repository\CargoTypeRepository;
 use App\Repository\ConsignataireRepository;
 use App\Repository\CountryRepository;
+use App\Repository\DraftContainerRepository;
 use App\Repository\ModuleRepository;
 use App\Repository\PortRepository;
 use App\Repository\RoleRepository;
@@ -23,6 +27,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,6 +73,14 @@ class SuperUserAdminController extends AbstractController
      * @var ArmateurRepository
      */
     private $armateurRepository;
+    /**
+     * @var DraftContainerRepository
+     */
+    private $draftContainerRepository;
+    /**
+     * @var CargoTypeRepository
+     */
+    private $cargoTypeRepository;
 
     public function __construct(RoleRepository $rolerepository,
                                 AdminRepository $adminRepository,
@@ -78,6 +91,8 @@ class SuperUserAdminController extends AbstractController
                                 UserPasswordEncoderInterface $userPasswordEncoder,
                                 ModuleRepository $moduleRepository,
                                 ArmateurRepository $armateurRepository,
+                                DraftContainerRepository $draftContainerRepository,
+                                CargoTypeRepository $cargoTypeRepository,
                                 ConsignataireRepository $consignataireRepository)
     {
         $this->roleRepository = $rolerepository;
@@ -91,6 +106,16 @@ class SuperUserAdminController extends AbstractController
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->moduleRepository = $moduleRepository;
         $this->armateurRepository = $armateurRepository;
+        $this->draftContainerRepository = $draftContainerRepository;
+        $this->cargoTypeRepository = $cargoTypeRepository;
+    }
+
+    public function addCargoType()
+    {
+    }
+    public function indexCargoType()
+    {
+        return $this->render('admin/super_user_admin/cargoType/index.html.twig');
     }
 
 
@@ -100,6 +125,9 @@ class SuperUserAdminController extends AbstractController
             'controller_name' => 'SuperUserAdminController',
         ]);
     }
+
+
+
 
     public function users()
     {
@@ -152,11 +180,7 @@ class SuperUserAdminController extends AbstractController
     }
 
 
-    /*geestion des ports et armateurs*/
-    public function insertConteneur(Request $request)
-    {
 
-    }
 
     public function addConsignataire(Request $request)
     {
@@ -200,10 +224,7 @@ class SuperUserAdminController extends AbstractController
         return $this->render('admin/super_user_admin/consignataire/index.html.twig',compact('ports','consignataires','roles'));
     }
 
-    public function containerIndex()
-    {
-        return $this->render('admin/super_user_admin/container/index.html.twig');
-    }
+
 
     public function getcountryList()
     {
@@ -264,5 +285,49 @@ class SuperUserAdminController extends AbstractController
         $this->objectManager->persist($armateur);
         $this->objectManager->flush();
         return new Response();
+    }
+
+
+    /*geestion des ports et armateurs*/
+    public function containerIndex()
+    {
+        $armateurs=$this->armateurRepository->getAll();
+        $containers=$this->draftContainerRepository->customFindAll();
+        $types=$this->cargoTypeRepository->findAll();
+        return $this->render('admin/super_user_admin/container/index.html.twig',compact('armateurs','containers','types'));
+    }
+
+    public function insertConteneur(Request $request)
+    {
+        $containerData=json_decode($request->getContent(),false);
+
+        ##SEARCH
+        $check=$this->draftContainerRepository->findBy(
+            ["proprietaireCode"=>$containerData->proprietaryCode]);
+        if ($check){
+            $this->addFlash('warning','Un conteneur existe deja avec ce code proprietaire');
+            return $this->containerIndex();
+        }else{
+            $container=new DraftContainer();
+            $container->setCargoType($containerData->cargoType);
+            $container->setContainerSize($containerData->containerSize);
+            $container->setTareWeight($containerData->tareWeight);
+            $container->setProprietaireCode($containerData->proprietaryCode);
+            $container->setGoodCode($containerData->groupCode);
+            $container->setRegisterNumber($containerData->registerNumber);
+            $container->setVerificationNumber($containerData->verificationCode);
+
+            $cargoType=$this->cargoTypeRepository->find($containerData->type);
+            $armateur=$this->armateurRepository->find($containerData->armateur_id);
+            $container->setArmateur($armateur);
+            $container->setCargoType($cargoType);
+            $this->objectManager->persist($container);
+            $this->objectManager->flush();
+            return $this->json([
+                'code'=>200
+            ]);
+        }
+        return new JsonResponse();
+
     }
 }

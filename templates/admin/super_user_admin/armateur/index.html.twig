@@ -147,8 +147,15 @@
                                         <td><p class="badge badge-success">Simple Armateur</p></td>
                                      {% else %}
                                          <td><p class="badge badge-danger">Compagnie armateur</p></td>
-                                    <td>@mdo</td>
                                      {% endif %}
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" onclick="">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>

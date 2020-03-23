@@ -7,6 +7,13 @@
             </div>
         </div>
         <div class="container-fluid">
+
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning">
+                    {{ message}}
+                </div>
+            {% endfor %}
+
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="alert alert-warning" role="alert">
@@ -19,24 +26,131 @@
                                 <h2 class="card-inside-title">Informations de bases</h2>
                                 <div class="row clearfix">
                                     <div class="col-sm-12">
-                                        <input type="text" placeholder="Nom de la compagnie" id="companyName" class="form-control col-sm-6">
+                                        <p> <b>Selectionner l'armateur</b> </p>
+                                        <select class="form-control select2-arrow" id="armateur_id">
+                                            {% for armateur in armateurs %}
+                                              <option value="{{ armateur.id }}">{{ armateur.label }}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row clearfix my-4">
-                                    <input type="text" id="cargoType" placeholder="Type de cargo" class="form-control col-sm-6">
+                                    <div class="col-sm-12">
+                                        <p> <b>Entrez le type de cargo</b> </p>
+                                        <select class="form-control" id="cargoType" name="cargoType">
+                                            <option class="" value="0" default>Veuillez selectionner le type de cargo </option>
+                                            {% for cargoType in types %}
+                                                <option class="" value="{{ cargoType.id }}">{{ cargoType.label }}</option>
+                                            {% endfor %}
+
+                                        </select>
+
+                                    </div>
                                 </div>
                                 <div class="row clearfix my-4">
-                                    <input type="text"  placeholder="Taille du conteneur" id="containerSize" class="form-control col-sm-6">
+                                        <div class="col-sm-12">
+                                            <p> <b>Entrez la taille du cargo</b> </p>
+                                            <input type="text" class="form-control" placeholder="Taille du cargo" id="containerSize">
+                                        </div>
                                 </div>
                                 <div class="row clearfix my-4">
-                                    <input type="text" placeholder="Poids net" id="netWeight" class="form-control col-sm-6">
+                                    <div class="col-sm-12">
+                                        <p> <b>Entrez le poids du cargo à vide </b> </p>
+                                        <input type="number" class="form-control" placeholder="Poids du cargo à vide" id="tareWeight">
+                                    </div>
                                 </div>
                                 <div class="row clearfix my-4">
-                                    <input type="text" placeholder="Numero d'agrement" id="agrement" class="form-control col-sm-6">
+                                    <div class="col-sm-12">
+                                        <p> <b>Entrez le code du groupe auquelle appartient le cargo </b> </p>
+                                        <input type="text" class="form-control" placeholder="Poids du cargo à vide" id="groupCode">
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-success" onclick="">Ajouter</button>
+                                <div class="row clearfix my-4">
+                                    <div class="col-sm-12">
+                                        <p> <b>Entrez le numero d'inscription </b> </p>
+                                        <input type="number" class="form-control" placeholder="Numero d'inscription   " id="registerNumber">
+                                    </div>
+                                </div>
+                                <div class="row clearfix my-4">
+                                    <div class="col-sm-12">
+                                        <p> <b>Entrez le chiffre de verification </b> </p>
+                                        <input type="number" class="form-control" placeholder="chiffre de verification" id="verificationCode">
+                                    </div>
+                                </div>
+                                <div class="row clearfix my-4">
+                                    <div class="col-sm-12">
+                                        <p> <b>Entrez le code propriétaire </b> </p>
+                                        <input type="text" class="form-control" placeholder="Code proprietaire" id="proprietaryCode">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-success" onclick="addContainer()">Ajouter</button>
 
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2> <strong>Liste des conteneurs</strong></h2>
+                            <ul class="header-dropdown">
+                                <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else</a></li>
+                                    </ul>
+                                </li>
+                                <li class="remove">
+                                    <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <p>Consultez la liste des conteneurs disponible</p>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+
+                                        <th>Code proprio</th>
+                                        <th>Poids à vide</th>
+                                        <th>Type de Cargo</th>
+                                        <th>Taille du container</th>
+                                        <th>Numero inscription</th>
+                                        <th>Numero de verif</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for container in containers %}
+
+                                        <tr>
+
+                                            <td>{{ container.proprietaireCode }}</td>
+                                            <td>{{ container.tareWeight }}</td>
+                                            <td>
+
+                                            {{ container.label }}
+                                            </td>
+                                            <td>
+                                                {{ container.tareWeight }}
+                                            </td>
+                                            <td>
+                                                {{ container.registerNumber }}
+                                            </td>
+                                            <td>
+                                                {{ container.verificationNumber }}
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -30,8 +30,8 @@ class AdminRepository extends ServiceEntityRepository
 
 
     public function getAffiliatedModule($id){
-        return $this->createQueryBuilder('admin_module')
-            ->where('admin_module.modules ')
+        return $this->createQueryBuilder('admin')
+            ->innerJoin('admin.modules','modules')
             ->getQuery()
             ->getResult();
     }
