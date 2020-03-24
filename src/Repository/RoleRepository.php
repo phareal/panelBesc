@@ -31,6 +31,13 @@ class RoleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getSomeRoles(){
+        return $this->createQueryBuilder('roles')
+            ->where('roles.id = 6')
+            ->orWhere('roles.id = 7')
+            ->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Role[] Returns an array of Role objects
     //  */

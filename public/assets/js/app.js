@@ -162,3 +162,21 @@ function addContainer() {
     })
 }
 
+function saveAgent() {
+    var data={
+        username:document.querySelector("#agentUsername").value,
+        password:document.querySelector("#agentPassword").value,
+        role_id:document.querySelector("#agentType").value,
+    }
+
+    fetch('/dashboard/vgm/gestion-agents/create',{
+        method:'POST',
+        body:JSON.stringify(data)
+    }).then(success=>{
+        if (success.status == 200){
+
+        }
+
+    })
+}
+

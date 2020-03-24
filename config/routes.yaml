@@ -101,6 +101,23 @@ dashboard-local:vgm:management:createIndex:
   path: /dashboard/vgm/gestion-vgm/create
   controller: App\Controller\App\vgm\VGMManagementController::createVGM
 
+dashboard-local:vgm:otherAdmin:index:
+  path: /dashboard/vgm/gestion-agents/
+  controller: App\Controller\App\vgm\OthersAdminController::index
+
+dashboard-local:vgm:otherAdmin:create:
+  path: /dashboard/vgm/gestion-agents/create
+  controller: App\Controller\App\vgm\OthersAdminController::create
+
+dashboard-local:vgm:otherAdmin:certificatorUser:index:
+  path: /dashboard/vgm/gestion-certificateurs/
+  controller: App\Controller\App\vgm\OthersAdminController::certificatorIndex
+
+dashboard-local:vgm:otherAdmin:validatorUser:index:
+  path: /dashboard/vgm/gestion-validateurs/
+  controller: App\Controller\App\vgm\OthersAdminController::validatorIndex
+
+
 
 dashboard-local:login:
   path: /dashboard/local-admin/login

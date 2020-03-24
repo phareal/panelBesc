@@ -22,16 +22,6 @@ class OtherAdmin
      */
     private $admin;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Role")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $role;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Module")
-     */
-    private $module;
 
     public function getId(): ?int
     {
@@ -50,27 +40,4 @@ class OtherAdmin
         return $this;
     }
 
-    public function getRole(): ?Role
-    {
-        return $this->role;
-    }
-
-    public function setRole(?Role $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    public function getModule(): ?Module
-    {
-        return $this->module;
-    }
-
-    public function setModule(?Module $module): self
-    {
-        $this->module = $module;
-
-        return $this;
-    }
 }

@@ -54,6 +54,23 @@ class Admin implements UserInterface,\Serializable
      */
     private $otherAdmins;
 
+    /**
+     * @return mixed
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+     * @param mixed $module
+     */
+    public function setModule($module): void
+    {
+        $this->module = $module;
+    }
+
+
 
 
     public function __construct()
