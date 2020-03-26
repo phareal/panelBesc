@@ -262,6 +262,22 @@ class SuperUserAdminController extends AbstractController
         return $this->render('admin/super_user_admin/armateur/index.html.twig',compact('ports','armateurs'));
 
     }
+
+    public function cargoType(Request $request)
+    {
+
+        $types=$this->containerTypeRepository->findAll();
+        if ($request->isMethod('POST')){
+            $containerType=new ContainerType();
+            $containerType->setLabel($request->request->get('label'));
+            $this->objectManager->persist($containerType);
+            $this->objectManager->flush();
+            $this->addFlash('success','Le type de cargo a bien été ajouté');
+            return $this->redirectToRoute('dashboard-su-user:cargoTye:index');
+
+        }
+        return $this->render('admin/super_user_admin/cargoType/index.html.twig',compact('types'));
+    }
     public function armateurAdd(Request $request)
     {
         $content=json_decode($request->getContent(),false);

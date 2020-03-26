@@ -2,14 +2,76 @@
 {% block content %}
 <div class="body_scroll">
     <div class="block-header">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="row">
-
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Dashboard</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"><i class="zmdi zmdi-home"></i> Gestion </a>
+                    </li>
+                    <li class="breadcrumb-item active">Des Types cargo</li>
+                </ul>
+                <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <button class="btn btn-success btn-icon float-right" data-toggle="modal" data-target="#addUserToModule" type="button">
+                    <i class="zmdi zmdi-account-add"></i>
+                </button>
+            </div>
         </div>
     </div>
     <div class="container-fluid">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="body">
+                        <form method="post">
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group row">
+                                        <label for="" class="col-form-label col-sm-6">Libellé</label>
+                                        <input type="text"  name="label"  class="form-control col-sm-6" placeholder="Nom du type de cargo" >
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row clearfix  d-flex align-center align-items-center">
+                                <input type="submit" class="btn btn-success" value="AJouter le type de conteneur">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="table-response">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Libellé</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for type in types  %}
+                            <tr>
+                                <td>{{ type.id }}</td>
+                                <td>{{ type.label }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+{% endblock %}

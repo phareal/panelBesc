@@ -52,6 +52,9 @@ dashboard-su-user:conteneur:add:
 dashboard-su-user:armateur:index:
   path: /dashboard/super-user/gestion-armateurs
   controller: App\Controller\SuperUser\SuperUserAdminController::armateurIndex
+dashboard-su-user:cargoTye:index:
+  path: /dashboard/super-user/gestion-cargoType
+  controller: App\Controller\SuperUser\SuperUserAdminController::cargoType
 
 
 dashboard-su-user:armateur:add:
