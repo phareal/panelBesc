@@ -118,7 +118,7 @@ class Admin implements UserInterface,\Serializable
 
     public function getRoles()
     {
-        return [$this->role->getLabel()];
+        return array_unique([$this->role->getLabel()]);
     }
 
     public function setRole($role): void

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\App\vgm\PayVgm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -87,10 +88,22 @@ class Client implements UserInterface, \Serializable
      */
     public $role;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Points", mappedBy="client")
+     */
+    private $points;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\App\vgm\PayVgm", mappedBy="client")
+     */
+    private $payVgms;
+
     public function __construct()
     {
         $this->armateurs = new ArrayCollection();
         $this->roles=new ArrayCollection();
+        $this->points = new ArrayCollection();
+        $this->payVgms = new ArrayCollection();
     }
 
     public function setUsername($username){
@@ -246,7 +259,7 @@ class Client implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return [$this->role->getLabel()];
+        return array_unique([$this->role->getLabel()]);
     }
 
     public function setRoles($role){
@@ -271,6 +284,68 @@ class Client implements UserInterface, \Serializable
     public function eraseCredentials()
     {
 
+    }
+
+    /**
+     * @return Collection|Points[]
+     */
+    public function getPoints(): Collection
+    {
+        return $this->points;
+    }
+
+    public function addPoint(Points $point): self
+    {
+        if (!$this->points->contains($point)) {
+            $this->points[] = $point;
+            $point->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removePoint(Points $point): self
+    {
+        if ($this->points->contains($point)) {
+            $this->points->removeElement($point);
+            // set the owning side to null (unless already changed)
+            if ($point->getClient() === $this) {
+                $point->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PayVgm[]
+     */
+    public function getPayVgms(): Collection
+    {
+        return $this->payVgms;
+    }
+
+    public function addPayVgm(PayVgm $payVgm): self
+    {
+        if (!$this->payVgms->contains($payVgm)) {
+            $this->payVgms[] = $payVgm;
+            $payVgm->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayVgm(PayVgm $payVgm): self
+    {
+        if ($this->payVgms->contains($payVgm)) {
+            $this->payVgms->removeElement($payVgm);
+            // set the owning side to null (unless already changed)
+            if ($payVgm->getClient() === $this) {
+                $payVgm->setClient(null);
+            }
+        }
+
+        return $this;
     }
 
 

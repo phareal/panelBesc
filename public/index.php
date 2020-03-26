@@ -26,5 +26,6 @@ try {
     $response = $kernel->handle($request);
 } catch (Exception $e) {
 }
+
 $response->send();
 $kernel->terminate($request, $response);

@@ -1,8 +1,7 @@
 <?php
+namespace App\Repository\Vgm;
 
-namespace App\Repository;
-
-use App\Entity\Container;
+use App\Entity\Vgm\Container;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

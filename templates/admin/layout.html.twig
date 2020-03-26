@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+
     <div class="page-loader-wrapper" style="display: none"></div>
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
     <div class="overlay"></div>
     <div id="search">
         <button id="close" type="button" class="close btn btn-primary btn-icon btn-icon-mini btn-round">x</button>
@@ -9,6 +15,8 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
+
+
     <div class="navbar-right">
         <ul class="navbar-nav">
             <li><a href="#search" class="main_search" title="Search..."><i class="zmdi zmdi-search"></i></a></li>

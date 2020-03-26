@@ -33,13 +33,6 @@ dashboard-su-user:add:
   path: /dashboard/super-user/gestion-users/add
   controller: App\Controller\SuperUser\SuperUserAdminController::insertUser
 
-dashboard-su-user:cargoType:
-  path: /dashboard/super-user/gestion-cargo
-  controller: App\Controller\SuperUser\SuperUserAdminController::indexCargoType
-
-dashboard-su-user:cargoTtype:add:
-  path: /dashboard/super-user/gestion-cargo
-  controller: App\Controller\SuperUser\SuperUserAdminController::addCargoType
 
 dashboard-su-user:consignataire:add:
   path: /dashboard/super-user/gestion-consignataire/add
@@ -97,13 +90,35 @@ dasboard-local:vgm:compagnie:index:
   controller: App\Controller\App\vgm\VGMController::showCompagnie
 
 
+dashboard-local:vgm:management:searchContainer:
+
+  path: /dashboard/vgm/gestion-vgm/container/search/{QUERY}
+  controller: App\Controller\App\vgm\VGMManagementController::searchVGM
+
+dashboard-local:vgm:management:fillInput:
+  path: /dashboard/vgm/gestion-vgm/container/fill/{idNum}
+  controller: App\Controller\App\vgm\VGMManagementController::fillInput
+
 dashboard-local:vgm:management:createIndex:
   path: /dashboard/vgm/gestion-vgm/create
-  controller: App\Controller\App\vgm\VGMManagementController::createVGM
+  controller: App\Controller\App\vgm\CertificatorController::createVGM
 
 dashboard-local:vgm:otherAdmin:index:
   path: /dashboard/vgm/gestion-agents/
   controller: App\Controller\App\vgm\OthersAdminController::index
+
+##for vgm validation
+dashboard-local:vgm:validaror:index:
+  path: /dashboard/vgm/validator/
+  controller: App\Controller\App\vgm\ValidatorController::index
+
+dashboard-local:vgm:validaror:vgmList:
+  path: /dashboard/vgm/validator/vgm-list
+  controller: App\Controller\App\vgm\VGMController::list
+
+dashboard-local:vgm:validaror:vgmDetail:
+  path: /dashboard/vgm/validator/vgm/{id}/detail
+  controller: App\Controller\App\vgm\VGMController::viewDetailsVgm
 
 dashboard-local:vgm:otherAdmin:create:
   path: /dashboard/vgm/gestion-agents/create
@@ -113,10 +128,24 @@ dashboard-local:vgm:otherAdmin:certificatorUser:index:
   path: /dashboard/vgm/gestion-certificateurs/
   controller: App\Controller\App\vgm\OthersAdminController::certificatorIndex
 
-dashboard-local:vgm:otherAdmin:validatorUser:index:
+dashboard-local:vgm:validatorUser:index:
   path: /dashboard/vgm/gestion-validateurs/
   controller: App\Controller\App\vgm\OthersAdminController::validatorIndex
 
+
+###for local
+
+dashboard-local:container:index:
+  path: /dashboard/vgm/containerList/
+  controller: App\Controller\App\vgm\OthersAdminController::validatorIndex
+
+dashboard-local:port:index:
+  path: /dashboard/vgm/ports-list/
+  controller: App\Controller\App\vgm\OthersAdminController::validatorIndex
+
+dashboard-local:compagnie:index:
+  path: /dashboard/vgm/compagnie-list/
+  controller: App\Controller\App\vgm\OthersAdminController::validatorIndex
 
 
 dashboard-local:login:

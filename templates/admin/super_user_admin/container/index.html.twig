@@ -116,12 +116,9 @@
                                     <thead>
                                     <tr>
 
+                                        <th>Numero d'identification</th>
+                                        <th>Type de Conteneur</th>
                                         <th>Code proprio</th>
-                                        <th>Poids à vide</th>
-                                        <th>Type de Cargo</th>
-                                        <th>Taille du container</th>
-                                        <th>Numero inscription</th>
-                                        <th>Numero de verif</th>
 
                                     </tr>
                                     </thead>
@@ -130,21 +127,9 @@
 
                                         <tr>
 
+                                            <td>{{ container.identificationNumber }}</td>
+                                            <td>{{ container.label }}</td>
                                             <td>{{ container.proprietaireCode }}</td>
-                                            <td>{{ container.tareWeight }}</td>
-                                            <td>
-
-                                            {{ container.label }}
-                                            </td>
-                                            <td>
-                                                {{ container.tareWeight }}
-                                            </td>
-                                            <td>
-                                                {{ container.registerNumber }}
-                                            </td>
-                                            <td>
-                                                {{ container.verificationNumber }}
-                                            </td>
 
                                         </tr>
                                     {% endfor %}

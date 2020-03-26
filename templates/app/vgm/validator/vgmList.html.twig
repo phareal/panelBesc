@@ -1,0 +1,82 @@
+{% extends 'app/vgm/validator/index.html.twig' %}
+
+{% block content %}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <h2>Dashboard</h2>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html"><i class="zmdi zmdi-home"></i> Validation</a>
+                </li>
+                <li class="breadcrumb-item active">Liste des vgm</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
+                        class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <button class="btn btn-success btn-icon float-right" data-toggle="modal" data-target="#addUserToModule"
+                    type="button">
+                <i class="zmdi zmdi-account-add"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Tableau des Vgm</h2>
+
+                </div>
+                <div class="body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                    <tr>
+                                        <th>Numero d'identification du conteneur</th>
+                                        <th>Etat</th>
+                                        <th>Actions</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                            {% for vgm in vgms %}
+                                <tr>
+                                    <td>{{ vgm.identificationNumber }}</td>
+                                    <td>
+                                        {% if vgm.state == 0 %}
+                                            <span class="badge badge-warning">En attente de paiement</span>
+
+                                        {% elseif vgm.state == 1 %}
+                                            <span class="badge badge-warning">En attente de validation</span>
+                                        {% elseif vgm.state == 2 %}
+                                            <span class="badge badge-success">Validé</span>
+                                         {% endif %}
+                                    </td>
+                                    <td><a href="{{ path('dashboard-local:vgm:validaror:vgmDetail',{'id':vgm.id}) }}" class="btn btn-success">
+                                            <i class="zmdi zmdi-eye"></i>
+                                        </a>
+                                        {% if vgm.state == 0 %}
+                                            <a  disabled="true" href="javascript:void(0);" onclick="alert('en Attente de paiement')" class="btn btn-success">
+                                                <i class="zmdi zmdi-check"></i>
+                                            </a>
+                                            {% else %}
+                                                <a  href="{{ path('dashboard-local:vgm:validaror:vgmDetail',{'id':vgm.id}) }}" class="btn btn-success">
+                                                    <i class="zmdi zmdi-check"></i>
+                                                </a>
+                                        {% endif %}
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

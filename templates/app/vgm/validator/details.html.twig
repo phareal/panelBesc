@@ -1,0 +1,63 @@
+{% extends'app/vgm/validator/index.html.twig' %}
+
+
+{% block content %}
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="header">
+                <h2><strong>Details de la VGM</strong></h2>
+            </div>
+            <div class="body">
+                <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingOne_1">
+                            <h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseOne_1" aria-expanded="false" aria-controls="collapseOne_1" class="collapsed"> Information de base</a> </h4>
+                        </div>
+                        <div id="collapseOne_1" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="headingOne_1" style="">
+                            <div class="panel-body">
+                                <form action="" method="post">
+                                    <div class="form-group row">
+                                            <label for="" class="col-form-label col-sm-6">Numero d'identification du conteneur</label>
+                                            <input type="number" class="form-control col-sm-6" disabled  placeholder="{{ vgmDetails.identificationNumber }}">
+                                    </div>
+                                    <div class="form-group row">
+                                            <label for="" class="col-form-label col-sm-6">Numero d'agrement</label>
+                                            <input type="number" class="form-control col-sm-6" disabled placeholder="{{ vgmDetails.agreementNumber}}">
+                                    </div>
+                                    <div class="form-group row">
+                                            <label for="" class="col-form-label col-sm-6">Numero IFU de la compagnie</label>
+                                            <input type="number" class="form-control col-sm-6" disabled placeholder="{{ vgmDetails.companyId}}">
+                                    </div>
+                                    {% if vgmDetails.vgm_id ==0 %}
+                                        <button class="btn btn-success" disabled>Button de validation desactiver En attente de paiement</button>
+                                    {% else %}
+                                         <button class="btn btn-success" >Valider</button>
+                                    {% endif %}
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" role="tab" id="headingThree_1">
+                            <h4 class="panel-title"> <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseThree_1" aria-expanded="false" aria-controls="collapseThree_1"> Fichiers attachés  </a> </h4>
+                        </div>
+                        <div id="collapseThree_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree_1">
+                            <div class="panel-body">
+                                {% for attachment in attachments %}
+                                    <a class="btn btn-success" href="{{ asset('uploads/brochures/'~attachment.url) }}">
+                                        voir
+                                        <i class="zmdi zmdi-download"></i>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

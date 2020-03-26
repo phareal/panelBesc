@@ -6,6 +6,7 @@ use App\Entity\Admin;
 use App\Entity\Module;
 use App\Entity\OtherAdmin;
 use App\Repository\ModuleRepository;
+use App\Repository\OtherAdminRepository;
 use App\Repository\RoleRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,20 +37,28 @@ class OthersAdminController extends AbstractController
      * @var ModuleRepository
      */
     private $moduleRepository;
+    /**
+     * @var OtherAdminRepository
+     */
+    private $otherAdminRepository;
 
-    public function __construct(RoleRepository $repository,UserPasswordEncoderInterface $userPasswordEncoder,
+    public function __construct(RoleRepository $repository,
+                                UserPasswordEncoderInterface $userPasswordEncoder,
                                 EntityManagerInterface $entityManager,
+                                OtherAdminRepository $otherAdminRepository,
                                 ModuleRepository $moduleRepository)
     {
         $this->repository = $repository;
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->entityManager = $entityManager;
         $this->moduleRepository = $moduleRepository;
+        $this->otherAdminRepository = $otherAdminRepository;
     }
 
     public function index(){
         $roles=$this->repository->getSomeRoles();
-        return $this->render('app/vgm/others_admin/index.html.twig',compact('roles'));
+        $managers=$this->otherAdminRepository->getAllVgmManager();
+        return $this->render('app/vgm/others_admin/index.html.twig',compact('roles','managers'));
     }
 
     public function certificatorIndex(Request $request){
@@ -78,10 +87,9 @@ class OthersAdminController extends AbstractController
            'code'=>200
         ]);
 
-
-        return new  Response();
     }
     public function validatorIndex(Request $request){
         return $this->render('app/vgm/others_admin/validatorIndex.html.twig');
     }
+
 }

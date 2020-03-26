@@ -1,7 +1,11 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Vgm;
 
+
+use App\Entity\Vgm\DraftAttachment;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,10 +35,6 @@ class Container
      */
     private $netWeight;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
-     */
-    private $tareWeight;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -47,47 +47,28 @@ class Container
     private $waybill;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $consignee;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $cargoType;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $containerSize;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $sealNumber;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $natureOfGoods;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $company;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $agreementNumber;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Admin")
      */
     private $certifyingOfficer;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Admin")
      */
     private $validatingOfficer;
 
@@ -107,46 +88,56 @@ class Container
     private $driver;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $truckNumber;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $companyId;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $tvfNumber;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $tvfDate;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string",nullable=true)
      */
     private $weightingDate1;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string",nullable=true)
      */
     private $weightingDate2;
 
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $state;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="DraftContainer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\DraftContainer")
      * @ORM\JoinColumn(name="draft_id",referencedColumnName="id"))
      */
     private $draft;
+
+
+
+    /**
+     * @ORM\Column(type="string",length=255,nullable=true)
+     */
+    private $companyId;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Vgm\VGM", mappedBy="container")
+     */
+    private $vGMs;
+
+
+
+    public function __construct()
+    {
+        $this->attachments = new ArrayCollection();
+        $this->vGMs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -237,10 +228,6 @@ class Container
         return $this;
     }
 
-    public function getCargoType(): ?string
-    {
-        return $this->cargoType;
-    }
 
     public function setCargoType(string $cargoType): self
     {
@@ -314,7 +301,7 @@ class Container
         return $this->certifyingOfficer;
     }
 
-    public function setCertifyingOfficer(string $certifyingOfficer): self
+    public function setCertifyingOfficer($certifyingOfficer): self
     {
         $this->certifyingOfficer = $certifyingOfficer;
 
@@ -386,7 +373,7 @@ class Container
         return $this->companyId;
     }
 
-    public function setCompanyId(int $companyId): self
+    public function setCompanyId($companyId): self
     {
         $this->companyId = $companyId;
 
@@ -422,7 +409,7 @@ class Container
         return $this->weightingDate1;
     }
 
-    public function setWeightingDate1(string $weightingDate1): self
+    public function setWeightingDate1($weightingDate1): self
     {
         $this->weightingDate1 = $weightingDate1;
 
@@ -434,10 +421,120 @@ class Container
         return $this->weightingDate2;
     }
 
-    public function setWeightingDate2(\DateTimeInterface $weightingDate2): self
+    public function setWeightingDate2($weightingDate2): self
     {
         $this->weightingDate2 = $weightingDate2;
 
         return $this;
     }
+
+    /**
+     * @return Collection|DraftAttachment[]
+     */
+    public function getAttachments(): Collection
+    {
+        return $this->attachments;
+    }
+
+    public function addAttachment(DraftAttachment $attachment): self
+    {
+        if (!$this->attachments->contains($attachment)) {
+            $this->attachments[] = $attachment;
+            $attachment->setContainer($this);
+        }
+
+        return $this;
+    }
+
+
+
+    public function removeAttachment(DraftAttachment $attachment): self
+    {
+        if ($this->attachments->contains($attachment)) {
+            $this->attachments->removeElement($attachment);
+            // set the owning side to null (unless already changed)
+            if ($attachment->getContainer() === $this) {
+                $attachment->setContainer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param mixed $state
+     */
+    public function setState($state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDraft()
+    {
+        return $this->draft;
+    }
+
+    /**
+     * @param mixed $draft
+     */
+    public function setDraft($draft): void
+    {
+        $this->draft = $draft;
+    }
+
+    public function getVGM(): ?VGM
+    {
+        return $this->vGM;
+    }
+
+    public function setVGM(?VGM $vGM): self
+    {
+        $this->vGM = $vGM;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VGM[]
+     */
+    public function getVGMs(): Collection
+    {
+        return $this->vGMs;
+    }
+
+    public function addVGM(VGM $vGM): self
+    {
+        if (!$this->vGMs->contains($vGM)) {
+            $this->vGMs[] = $vGM;
+            $vGM->setContainer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVGM(VGM $vGM): self
+    {
+        if ($this->vGMs->contains($vGM)) {
+            $this->vGMs->removeElement($vGM);
+            // set the owning side to null (unless already changed)
+            if ($vGM->getContainer() === $this) {
+                $vGM->setContainer(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

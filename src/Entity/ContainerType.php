@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="CargoTypeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ContainerTypeRepository")
  */
-class CargoType
+class ContainerType
 {
     /**
      * @ORM\Id()

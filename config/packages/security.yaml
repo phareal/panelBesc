@@ -58,6 +58,7 @@ security:
     access_control:
          - { path: ^/dashboard/super-user, roles: ROLE_SUPER }
          - { path: ^/profile, roles: ROLE_USER }
+
     encoders:
         App\Entity\Admin:
             algorithm: bcrypt

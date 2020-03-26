@@ -21,11 +21,13 @@ btn_addUser.addEventListener("click", function () {
         body: JSON.stringify(data)
     })
         .then(success => {
-            window.location.reload()
+
         })
         .catch(failure => {
             console.log(failure)
         })
+
+    event.preventDefault()
 })
 
 function deleteUser(id) {
@@ -142,10 +144,9 @@ function addNewArmateur() {
 function addContainer() {
     var body = {
         armateur_id:document.querySelector("#armateur_id").value,
-        cargoType:document.querySelector("#cargoType").value,
+        containerType:document.querySelector("#cargoType").value,
         containerSize:document.querySelector("#containerSize").value,
         tareWeight:document.querySelector("#tareWeight").value,
-        type:document.querySelector("#cargoType").value,
         groupCode:document.querySelector("#groupCode").value,
         registerNumber:document.querySelector("#registerNumber").value,
         verificationCode:document.querySelector("#verificationCode").value,
@@ -156,7 +157,7 @@ function addContainer() {
         method:"POST",
         body:JSON.stringify(body)
     }).then(success=>{
-
+        window.location.reload()
     }).catch(failure=>{
 
     })
@@ -179,4 +180,6 @@ function saveAgent() {
 
     })
 }
+
+
 

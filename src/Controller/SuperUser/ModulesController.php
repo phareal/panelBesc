@@ -22,7 +22,10 @@ class ModulesController extends AbstractController
     private  $moduleRepository;
     private $objectManager;
 
-    public function __construct(RoleRepository $repository,AdminRepository $adminRepository,ModuleRepository $moduleRepository,EntityManagerInterface $objectManager){
+    public function __construct(RoleRepository $repository,
+                                AdminRepository $adminRepository,
+                                ModuleRepository $moduleRepository,
+                                EntityManagerInterface $objectManager){
         $this->roleRepository=$repository;
         $this->adminRepository=$adminRepository;
         $this->moduleRepository=$moduleRepository;

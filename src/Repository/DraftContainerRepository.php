@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\DraftContainer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Query;
 
 /**
  * @method DraftContainer|null find($id, $lockMode = null, $lockVersion = null)
@@ -49,12 +51,45 @@ class DraftContainerRepository extends ServiceEntityRepository
     */
 
     public function customFindAll(){
-        return $this->createQueryBuilder('container')
-            ->select('container.id','container.tareWeight','container.containerSize','cargoType.label','container.proprietaireCode','container.registerNumber','container.verificationNumber')
-            ->innerJoin('container.armateur','armateur')
-            ->innerJoin('container.cargoType','cargoType')
+        return $this->createQueryBuilder('draftContainer')
+            ->select('draftContainer.id','containerType.label','draftContainer.proprietaireCode','draftContainer.identificationNumber')
+            ->innerJoin('draftContainer.armateur','armateur')
+            ->innerJoin('draftContainer.container','containerType')
             ->getQuery()
             ->getResult();
+    }
+
+
+    public function searchContainer($query){
+        return $this->createQueryBuilder('container')
+            ->select('container.identificationNumber')
+            ->where('container.identificationNumber LIKE :query')
+            ->setParameter('query','%'.$query.'%')
+            ->getQuery()
+            ->getScalarResult();
+    }
+
+
+    public function findByIdNum($idNum){
+
+        try {
+            return $this->createQueryBuilder('draftContainer')
+                ->select('armateur.id as armateur_id',
+                    'client.label',
+                    'draftContainer.tareWeight',
+                    'draftContainer.proprietaireCode',
+                    'draftContainer.goodCode',
+                    'draftContainer.id as id',
+                    'draftContainer.containerSize',
+                    'draftContainer.registerNumber')
+                ->where('draftContainer.identificationNumber = :params')
+                ->innerJoin('draftContainer.armateur', 'armateur')
+                ->innerJoin('armateur.client', 'client')
+                ->setParameter('params', $idNum)
+                ->getQuery()
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+        }
     }
 
 

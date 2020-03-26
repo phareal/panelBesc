@@ -47,4 +47,25 @@ class OtherAdminRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getAllVgmManager(){
+        return $this->createQueryBuilder('manager')
+            ->select('admin.username','manager.id as id','admin.id as admin_id','role.id as role_id')
+            ->join('manager.admin','admin')
+            ->join('admin.role','role')
+            ->join('admin.module','module')
+            ->where('module.id = 1')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllManager(){
+        return $this->createQueryBuilder('manager')
+            ->select('admin.password','admin.username','manager.id as id','admin.id as admin_id','role.id as role_id','role.label')
+            ->join('manager.admin','admin')
+            ->join('admin.role','role')
+            ->join('admin.module','module')
+            ->getQuery()
+            ->getResult();
+    }
 }

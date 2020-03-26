@@ -24,10 +24,10 @@ class UserFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         $user=new Admin();
-        $user->setUsername("panel@gestionbesc.online");
+        $user->setUsername("gestionadmin@cncb.bj");
 
 
-        $user->setPassword($this->userPasswordEncoder->encodePassword($user,"panel@gestionbesc.online"));
+        $user->setPassword($this->userPasswordEncoder->encodePassword($user,"gestionadmin@cncb.bj"));
         $manager->persist($user);
         $manager->flush();
     }

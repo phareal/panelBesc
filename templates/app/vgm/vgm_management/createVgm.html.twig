@@ -1,6 +1,12 @@
 {% extends 'app/vgm/index.html.twig' %}
 
 {% block content %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
     <div class="block-header">
         <div class="row">
             <div class="col-lg-7 col-md-6 col-sm-12">
@@ -24,9 +30,297 @@
     </div>
     <div class="container-fluid">
         <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Ajout d'un nouveau VGM</h2>
 
+                    </div>
+                    <div class="body">
+                        <form method="post" enctype="multipart/form-data" id="createVGMForm">
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-form-label col-sm-6">
+                                       Numero d'identification du conteneur
+                                    </label>
+                                    <input type="text" id="searchBox" name="identificationNumber"  tabindex="1"  class=" form-control col-sm-6 typeahead">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                        Poids de la marchandise pesé
+                                    </label>
+                                    <input type="number" name="netWeight" class="form-control col-sm-6" id="netWeight">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                        Poids à vide du conteneur
+                                    </label>
+                                    <input type="number"  name="tareWeight" class="form-control col-sm-6"  id="tareWeight">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Booking
+                                    </label>
+                                    <input type="text" name="booking" placeholder=" Numero d'espace réservé dans le navire" class="form-control col-sm-6" id="booking">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                        Numéro de connaissement
+                                    </label>
+                                    <input type="text" name="wayBill" class="form-control col-sm-6" id="waybill">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                {#TODO Type de conteneur#}
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Type de conteneur
+                                    </label>
+                                    <input type="text"  name="cargoType" class="form-control col-sm-6" id="cargoType">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                {#TODO select avec 20 Pieds 40 Pieds#}
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Taille du conteneur
+                                    </label>
+                                    <input type="text" name="containerSize" class="form-control col-sm-6"  id="containerSize">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Numéro de scellé (Plon)
+                                    </label>
+                                    <input type="text" name="sealNumber" class="form-control col-sm-6" id="sealNumber">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                {#TODO select box#}
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Nature de la marchandise
+                                    </label>
+                                    <input type="text" name="natureGoods" class="form-control col-sm-6"  id="natureOfGoods">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Exportateur de la marchandise
+                                    </label>
+                                    <input type="text" name="company" class="form-control col-sm-6"  id="company">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Numéro d'agrément de l'exportateur
+                                    </label>
+                                    <input type="text" name="agreementNumber" class="form-control col-sm-6" id="agreementNumber">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Agent de collecte
+                                    </label>
+                                    <input type="text" name="certifyingOfficer" value="{{ app.user.username }}" class="form-control col-sm-6" id="certifyingOfficer">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Identifiant du pont bascule
+                                    </label>
+                                    <input type="text" name="weightBride" class="form-control col-sm-6" id="weightbride">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Transporteur
+                                    </label>
+                                    <input type="text" name="transporter" class="form-control col-sm-6" id="transporter">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Conducteur
+                                    </label>
+                                    <input type="text" name="driver" class="form-control col-sm-6" id="driver">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Immatriculation du camion
+                                    </label>
+                                    <input type="text" name="truckNumber" class="form-control col-sm-6" id="truckNumber">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Numero du DVT dans la guce
+                                    </label>
+                                    <input type="text" name="dvtNumber" class="form-control col-sm-6" id="dvtNumber">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                     Date creation de la dvt
+                                    </label>
+                                    <input type="date" name="dvtCreatedAt" class="form-control col-sm-6" id="tvfDate">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                      Date de la pesée 1
+                                    </label>
+                                    <input type="date" name="weightingDate1" class="form-control col-sm-6" id="weightingDate1">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                        Date de la pesée 2
+                                    </label>
+                                    <input type="date" name="weightingDate2" class="form-control col-sm-6" id="weightingDate2">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                     Fichier attachés
+                                    </label>
+                                    <input type="file" multiple name="attachments[]" class="form-control-file col-sm-6"  id="attachment">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-success"  type="submit">Creer
+                                    <i class="zmdi zmdi-collection-add"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 {% endblock %}
+{% block javascripts %}
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            document.onkeyup = onFill
+            // Defining the local dataset
+
+            // Constructing the suggestion engine
+            var cars = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote:{
+                    url:'/dashboard/vgm/gestion-vgm/container/search/%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+
+            // Initializing the typeahead
+            $('#searchBox').typeahead({
+                    hint: true,
+                    highlight: true, /* Enable substring highlighting */
+                    minLength: 1 /* Specify minimum characters required for showing result */
+                },
+                {
+                    name: 'cars',
+                    source: cars.ttAdapter()
+                });
+
+            function onFill() {
+               var keyCode= (window.event) ? event.keyCode : e.keyCode
+
+                if (keyCode == 9){
+                    var number = document.querySelector('#searchBox').value;
+                    //get the value from input and search in the database
+                    fetch('/dashboard/vgm/gestion-vgm/container/fill/'+number,{
+                        method:'GET'
+                    }).then(success=>{
+                        return success.json()
+                       .then(data=>{
+
+                           document.querySelector("#tareWeight").value= data.tareWeight
+                           document.querySelector("#containerSize").value= data.containerSize
+                           document.querySelector("#natureOfGoods").value= data.goodCode
+                           document.querySelector("#company").value= data.label
+                           console.log(data)
+                       })
+                    }).catch(failure =>{
+
+                    })
+                }
+            }
+
+        });
+
+        const _form=document.getElementById("createVGMForm")
+
+
+        /*_form.addEventListener('submit',function () {
+           const  formData = new FormData(document.getElementById("createVGMForm"))
+            const  file= document.querySelector('input[type="file"]')
+            console.log(file[0])
+            const searchParams = new URLSearchParams();
+
+            for (const pair of formData ){
+                searchParams.append(pair[0],pair[1])
+            }
+
+            fetch('/dashboard/vgm/gestion-vgm/create',{
+                method:"POST",
+                body:searchParams
+            }).then(success=>{
+
+            }).catch(failure=>{
+
+            })
+        })*/
+    </script>
+{% endblock  %}

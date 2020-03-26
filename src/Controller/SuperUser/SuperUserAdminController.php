@@ -4,7 +4,7 @@ namespace App\Controller\SuperUser;
 
 use App\Entity\Admin;
 use App\Entity\Armateur;
-use App\Entity\CargoType;
+use App\Entity\ContainerType;
 use App\Entity\Client;
 use App\Entity\Company;
 use App\Entity\Consignataire;
@@ -12,9 +12,10 @@ use App\Entity\Country;
 use App\Entity\DraftContainer;
 use App\Entity\Port;
 use App\Entity\Role;
+use App\Helpers\Helpers;
 use App\Repository\AdminRepository;
 use App\Repository\ArmateurRepository;
-use App\Repository\CargoTypeRepository;
+use App\Repository\ContainerTypeRepository;
 use App\Repository\ConsignataireRepository;
 use App\Repository\CountryRepository;
 use App\Repository\DraftContainerRepository;
@@ -78,9 +79,9 @@ class SuperUserAdminController extends AbstractController
      */
     private $draftContainerRepository;
     /**
-     * @var CargoTypeRepository
+     * @var ContainerTypeRepository
      */
-    private $cargoTypeRepository;
+    private $containerTypeRepository;
 
     public function __construct(RoleRepository $rolerepository,
                                 AdminRepository $adminRepository,
@@ -92,7 +93,7 @@ class SuperUserAdminController extends AbstractController
                                 ModuleRepository $moduleRepository,
                                 ArmateurRepository $armateurRepository,
                                 DraftContainerRepository $draftContainerRepository,
-                                CargoTypeRepository $cargoTypeRepository,
+                                ContainerTypeRepository $containerTypeRepository,
                                 ConsignataireRepository $consignataireRepository)
     {
         $this->roleRepository = $rolerepository;
@@ -107,15 +108,15 @@ class SuperUserAdminController extends AbstractController
         $this->moduleRepository = $moduleRepository;
         $this->armateurRepository = $armateurRepository;
         $this->draftContainerRepository = $draftContainerRepository;
-        $this->cargoTypeRepository = $cargoTypeRepository;
+        $this->containerTypeRepository = $containerTypeRepository;
     }
 
-    public function addCargoType()
+    public function addcontainerType()
     {
     }
-    public function indexCargoType()
+    public function indexcontainerType()
     {
-        return $this->render('admin/super_user_admin/cargoType/index.html.twig');
+        return $this->render('admin/super_user_admin/containerType/index.html.twig');
     }
 
 
@@ -142,19 +143,19 @@ class SuperUserAdminController extends AbstractController
     {
 
         $formData = json_decode($request->getContent(), true);
-
         $admin = new Admin();
         $admin->setUsername($formData['username']);
         $admin->setPassword($userPasswordEncoder->encodePassword($admin, $formData['password']));
 
         $role = $this->roleRepository->find($formData['role_id']);
+        $module=$this->moduleRepository->find($formData['module_id']);
         $admin->setRole($role);
         $this->objectManager->persist($admin);
         $this->objectManager->flush();
 
         if ($formData['module_id']!=0){
-            $module=$this->moduleRepository->find($formData['module_id']);
-            $admin->attachModule($module);
+
+            $admin->setModule($module);
             $this->objectManager->persist($admin);
             $this->objectManager->flush();
         }else{
@@ -293,7 +294,7 @@ class SuperUserAdminController extends AbstractController
     {
         $armateurs=$this->armateurRepository->getAll();
         $containers=$this->draftContainerRepository->customFindAll();
-        $types=$this->cargoTypeRepository->findAll();
+        $types=$this->containerTypeRepository->findAll();
         return $this->render('admin/super_user_admin/container/index.html.twig',compact('armateurs','containers','types'));
     }
 
@@ -302,32 +303,27 @@ class SuperUserAdminController extends AbstractController
         $containerData=json_decode($request->getContent(),false);
 
         ##SEARCH
-        $check=$this->draftContainerRepository->findBy(
-            ["proprietaireCode"=>$containerData->proprietaryCode]);
-        if ($check){
-            $this->addFlash('warning','Un conteneur existe deja avec ce code proprietaire');
-            return $this->containerIndex();
-        }else{
             $container=new DraftContainer();
-            $container->setCargoType($containerData->cargoType);
             $container->setContainerSize($containerData->containerSize);
             $container->setTareWeight($containerData->tareWeight);
             $container->setProprietaireCode($containerData->proprietaryCode);
             $container->setGoodCode($containerData->groupCode);
             $container->setRegisterNumber($containerData->registerNumber);
             $container->setVerificationNumber($containerData->verificationCode);
+            $container->setIdentificationNumber(strtoupper(Helpers::generateIdentificationNumber()));
 
-            $cargoType=$this->cargoTypeRepository->find($containerData->type);
+            $containerType=$this->containerTypeRepository->find($containerData->containerType);
             $armateur=$this->armateurRepository->find($containerData->armateur_id);
             $container->setArmateur($armateur);
-            $container->setCargoType($cargoType);
+            $container->setContainer($containerType);
             $this->objectManager->persist($container);
             $this->objectManager->flush();
             return $this->json([
                 'code'=>200
             ]);
-        }
-        return new JsonResponse();
+
 
     }
+
+
 }

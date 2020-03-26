@@ -35,13 +35,31 @@ class DraftContainer
     public $armateur;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CargoType")
+     * @ORM\ManyToOne(targetEntity="ContainerType")
      */
 
-    public $cargoType;
+    private $container;
 
     /**
-     * @ORM\Column(type="string", length=255,unique=true)
+     * @return mixed
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * @param mixed $container
+     */
+    public function setContainer($container): void
+    {
+        $this->container = $container;
+    }
+
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
      */
     private $proprietaireCode;
 
@@ -58,27 +76,17 @@ class DraftContainer
      */
     private $verificationNumber;
 
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $identificationNumber;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-
-    /**
-     * @return mixed
-     */
-    public function getCargoType()
-    {
-        return $this->cargoType;
-    }
-
-    /**
-     * @param mixed $cargoType
-     */
-    public function setCargoType($cargoType): void
-    {
-        $this->cargoType = $cargoType;
-    }
 
     /**
      * @return mixed
@@ -190,6 +198,22 @@ class DraftContainer
     public function setVerificationNumber($verificationNumber): void
     {
         $this->verificationNumber = $verificationNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdentificationNumber()
+    {
+        return $this->identificationNumber;
+    }
+
+    /**
+     * @param mixed $identificationNumber
+     */
+    public function setIdentificationNumber($identificationNumber): void
+    {
+        $this->identificationNumber = $identificationNumber;
     }
 
 

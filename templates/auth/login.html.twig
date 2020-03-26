@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
                  <title>Document</title>
         <link href="{{ asset('assets/css/tailwind.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/style.min.css') }}" rel="stylesheet">
     </head>
     <body>
     <div class="flex h-screen align-items-center justify-content-center">
@@ -25,7 +26,7 @@
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input name="_username" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe">
+                        <input name="_username" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" placeholder=" Nom d'utilisateur">
                     </div>
                 </div>
                 <div class="md:flex md:items-center mb-6">
@@ -35,7 +36,7 @@
                         </label>
                     </div>
                     <div class="md:w-2/3">
-                        <input name="_password" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-username" type="password" placeholder="******************">
+                        <input name="_password" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-username" type="password" placeholder="Mot de passe">
                     </div>
                 </div>
                 <div class="md:flex md:items-center">
@@ -49,6 +50,9 @@
             </form>
         </div>
     </div>
+    <footer class="footer text-center text-gray-500 font-bold">
+        CopyRight CNCB2020 - Designed by WebEVOLUTION - Powered by MAGMATEL - NET2ALL
+    </footer>
     </body>
     </html>
 

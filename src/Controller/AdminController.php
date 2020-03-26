@@ -37,23 +37,56 @@ class AdminController extends AbstractController
     public function index(Request $request){
         if ($this->getUser()!=null){
             $roles=$this->getUser()->getRoles();
-            if ($roles[0]=="ROLE_SUPER"){
-               return $this->redirectToRoute('dashboard-su:index');
-            }else if ($roles[0]=="local administrator"){
-                switch ($this->getUser()->module->getId()){
-                    case 1 :
-                        return  $this->redirectToRoute('dashboard-local:vgm:index');
-                        break;
-                    case 2 :
-                        return  $this->redirectToRoute('dashboard-local:index');
-                }
 
+            if ($roles[0] == "ROLE_SUPER"){
+                return $this->redirectToRoute('dashboard-su:index');
+            }elseif ($roles[0] == "local administrator" || $roles[0]=="ROLE_CERTIFICATOR" ){
+                $module=$this->getUser()->module->getId();
+                if ($module ==1){
+                    return $this->redirectToRoute('dashboard-local:vgm:index');
+                }elseif ($module ==2){
+                    return $this->redirectToRoute('dashboard-local:index');
+                }
+            }elseif ($roles[0] == "ROLE_VALIDATOR"){
+                $module=$this->getUser()->module->getId();
+                if ($module ==1){
+                    return $this->redirect('/dashboard/vgm/validator/');
+                }elseif ($module ==2){
+                    return $this->redirectToRoute('dashboard-local:index');
+                }
             }
+          /*  switch ($roles[0]){
+                case "ROLE_SUPER":
+                    return $this->redirectToRoute('dashboard-su:index');
+                    break;
+                case "local administrator" || "ROLE_CERTIFICATOR":
+                    $module=$this->getUser()->module->getId();
+                    switch ($module) {
+                        case 1 :
+
+                            break;
+                        case 2 :
+                            return $this->redirectToRoute('dashboard-local:index');
+                            break;
+                    }
+                    break;
+                case "ROLE_VALIDATOR":
+                    $module=$this->getUser()->module->getId();
+                    switch ($module) {
+                        case 1 :
+                            return $this->redirect('/dashboard/vgm/validator/');
+                            break;
+                        case 2 :
+                            return $this->redirectToRoute('dashboard-local:index');
+                            break;
+                    }
+                    break;
+
+            }*/
         }else{
             return $this->redirectToRoute('login_form');
         }
         return new Response();
-
 
     }
 

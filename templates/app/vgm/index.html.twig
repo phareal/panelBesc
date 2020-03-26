@@ -40,19 +40,8 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="zmdi zmdi-grid"></i><span>Collaborateurs</span></a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ path('dashboard-local:vgm:otherAdmin:index') }}">Configuration de base</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('dashboard-local:vgm:otherAdmin:certificatorUser:index') }}">Agent certificateur</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('dashboard-local:vgm:otherAdmin:validatorUser:index') }}">Agent Validateur</a>
-                            </li>
-                        </ul>
+                        <a href="{{ path('dashboard-local:vgm:otherAdmin:index') }}" class="menu-toggle">
+                            <i class="zmdi zmdi-grid"></i><span>Configurations de base</span></a>
                     </li>
                     <li class="open">
                         <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
@@ -105,35 +94,6 @@
     </div>
 
     <div class="container-fluid">
-        <div class="row clearfix">
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card w_data_1">
-                    <div class="body">
-                        <div class="w_icon indigo"><i class="zmdi zmdi-settings"></i></div>
-                        <h4 class="mt-3">45.8k</h4>
-                        <span class="text-muted">Nombre total de VGM</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card w_data_1">
-                    <div class="body">
-                        <div class="w_icon pink"><i class="zmdi zmdi-bug"></i></div>
-                        <h4 class="mt-3">12.1k</h4>
-                        <span class="text-muted">Nombre d'admin</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card w_data_1">
-                    <div class="body">
-                        <div class="w_icon orange"><i class="zmdi zmdi-shopping-cart"></i></div>
-                        <h4 class="mt-3">53.8k</h4>
-                        <span class="text-muted">Nombre totales de conteneur</span>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row clearfix">
 
         </div>
