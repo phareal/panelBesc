@@ -3,7 +3,7 @@
     <aside id="leftsidebar" class="sidebar">
         <div class="navbar-brand">
             <button class="btn-menu ls-toggle-btn" type="button"><i class="zmdi zmdi-menu"></i></button>
-            <a href="index.html">
+            <a href="#">
                 <span class="m-l-10">Panel Gestion</span>
             </a>
         </div>
@@ -11,7 +11,7 @@
             <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: calc(100vh - 65px);"><ul class="list" style="overflow: hidden; width: auto; height: calc(100vh - 65px);">
                     <li>
                         <div class="user-info">
-                            <a class="image waves-effect waves-block" href="profile.html">
+                            <a class="image waves-effect waves-block" href="#">
                                 <img src="{{ asset('assets/images/account.png') }}" alt="User">
                             </a>
                             <div class="detail">
@@ -23,15 +23,16 @@
                     <li class="active open">
                         <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
-                    <li>
+                    {#TODO revoir la gestion des modules de facon globales#}
+                 {#   <li>
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                             <i class="zmdi zmdi-apps"></i><span>Modules</span></a>
                         <ul class="ml-menu">
                             <li><a href="mail-inbox.html" class=" waves-effect waves-block">Besc</a></li>
-                            <li><a href="events.html" class=" waves-effect waves-block">BOURSE DU FRET</a></li>
-                            <li><a href="contact.html" class=" waves-effect waves-block">TRADEPOINT</a></li>
+                            <li><a href="" onclick="alert('en cours developpement')" class=" waves-effect waves-block">BOURSE DU FRET</a></li>
+                            <li><a onclick="alert('en cours developpement')" class=" waves-effect waves-block">TRADEPOINT</a></li>
                         </ul>
-                    </li>
+                    </li>#}
                     <li class="">
                         <a href="{{ path('dashboardSuUser') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-accounts-list"></i>
@@ -40,7 +41,7 @@
                     </li>
                     <li class="">
                         <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
-                            <i class="zmdi zmdi-shopping-basket"></i><span>
+                            <i class="zmdi zmdi-shopping-cart"></i><span>
                                 Tarifs</span>
                         </a>
                     </li>
@@ -52,7 +53,7 @@
                     </li>
                     <li class="">
                         <a href="{{ path('dashboard-su-user:port') }}" class="toggled waves-effect waves-block">
-                            <i class="zmdi zmdi-local-shipping"></i><span>
+                            <i class="zmdi zmdi-settings"></i><span>
                                 Port</span>
                         </a>
                     </li>
@@ -64,7 +65,7 @@
                     </li>
                     <li class="">
                         <a href="{{ path('dashboard-su-user:conteneur:index') }}" class="toggled waves-effect waves-block">
-                            <i class="zmdi zmdi-local-shipping"></i><span>
+                            <i class="zmdi zmdi-local-convenience-store"></i><span>
                                 Conteneur</span>
                         </a>
                     </li>
@@ -72,6 +73,12 @@
                         <a href="{{ path('dashboard-su-user:consignataire:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-accounts-list-alt"></i><span>
                                 Consignataires</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('dashboard-su-user:exportateurs:index') }}" class="toggled waves-effect waves-block">
+                            <i class="zmdi zmdi-accounts-list-alt"></i><span>
+                                Exportateurs</span>
                         </a>
                     </li>
                     <li class="">

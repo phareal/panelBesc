@@ -14,6 +14,12 @@
                 </div>
             {% endfor %}
 
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message}}
+                </div>
+            {% endfor %}
+
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="alert alert-warning" role="alert">
@@ -27,11 +33,23 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-12">
                                         <p> <b>Selectionner l'armateur</b> </p>
-                                        <select class="form-control select2-arrow" id="armateur_id">
+                                        <select class="form-control select2-arrow" name="armateur_id">
                                             {% for armateur in armateurs %}
                                               <option value="{{ armateur.id }}">{{ armateur.label }}</option>
                                             {% endfor %}
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="row clearfix my-4">
+                                    <div class="col-sm-12">
+                                        <p> <b>Entrez le code propriétaire </b> </p>
+                                        <input type="text" class="form-control" placeholder="Code proprietaire" name="proprietaryCode">
+                                    </div>
+                                </div>
+                                <div class="row clearfix my-4">
+                                    <div class="col-sm-12">
+                                        <p> <b>Entrez le code du groupe auquelle appartient le cargo </b> </p>
+                                        <input type="text" class="form-control" placeholder="Poids du cargo à vide" name="groupCode">
                                     </div>
                                 </div>
                                 <div class="row clearfix my-4">
@@ -49,42 +67,37 @@
                                 </div>
                                 <div class="row clearfix my-4">
                                         <div class="col-sm-12">
-                                            <p> <b>Entrez la taille du cargo</b> </p>
-                                            <input type="text" class="form-control" placeholder="Taille du cargo" id="containerSize">
+                                            <p> <b>Taille du conteneur</b> </p>
+                                            <select class="select form-control" name="containerSize">
+                                                <option value="0" default>Veuillez selectionnez la taille du conteneur</option>
+                                                <option value="20">Conteneur de 20 Pieds</option>
+                                                <option value="40">Conteneur de 40 Pieds</option>
+                                            </select>
+
                                         </div>
                                 </div>
                                 <div class="row clearfix my-4">
                                     <div class="col-sm-12">
                                         <p> <b>Entrez le poids du cargo à vide </b> </p>
-                                        <input type="number" class="form-control" placeholder="Poids du cargo à vide" id="tareWeight">
+                                        <input type="number" class="form-control" placeholder="Poids du cargo à vide" name="tareWeight">
                                     </div>
                                 </div>
-                                <div class="row clearfix my-4">
-                                    <div class="col-sm-12">
-                                        <p> <b>Entrez le code du groupe auquelle appartient le cargo </b> </p>
-                                        <input type="text" class="form-control" placeholder="Poids du cargo à vide" id="groupCode">
-                                    </div>
-                                </div>
+
                                 <div class="row clearfix my-4">
                                     <div class="col-sm-12">
                                         <p> <b>Entrez le numero d'inscription </b> </p>
-                                        <input type="number" class="form-control" placeholder="Numero d'inscription   " id="registerNumber">
+                                        <input type="number" class="form-control" placeholder="Numero d'inscription   " name="registerNumber">
                                     </div>
                                 </div>
                                 <div class="row clearfix my-4">
                                     <div class="col-sm-12">
                                         <p> <b>Entrez le chiffre de verification </b> </p>
-                                        <input type="number" class="form-control" placeholder="chiffre de verification" id="verificationCode">
-                                    </div>
-                                </div>
-                                <div class="row clearfix my-4">
-                                    <div class="col-sm-12">
-                                        <p> <b>Entrez le code propriétaire </b> </p>
-                                        <input type="text" class="form-control" placeholder="Code proprietaire" id="proprietaryCode">
+                                        <input type="number" class="form-control" placeholder="chiffre de verification" name="verificationCode">
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-success" onclick="addContainer()">Ajouter</button>
+
+                                <button type="submit" class="btn btn-success">Ajouter un nouveau conteneur</button>
 
                             </form>
                         </div>

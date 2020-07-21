@@ -41,6 +41,14 @@ dashboard-su-user:consignataire:add:
 dashboard-su-user:consignataire:index:
   path: /dashboard/super-user/gestion-consignataire
   controller: App\Controller\SuperUser\SuperUserAdminController::consignataireIndex
+
+dashboard-su-user:exportateurs:index:
+  path: /dashboard/super-user/gestion-exportateurs
+  controller: App\Controller\SuperUser\SuperUserAdminController:exportateursIndex
+
+dashboard-su-user:consignataire:details:
+  path: /dashboard/super-user/gestion-consignataire/{id}/detail
+  controller: App\Controller\SuperUser\SuperUserAdminController::consignataireDetails
 dashboard-su-user:conteneur:index:
   path: /dashboard/super-user/gestion-conteneurs
   controller: App\Controller\SuperUser\SuperUserAdminController::containerIndex
@@ -106,6 +114,10 @@ dashboard-local:vgm:management:createIndex:
   path: /dashboard/vgm/gestion-vgm/create
   controller: App\Controller\App\vgm\CertificatorController::createVGM
 
+dashboard-local:vgm:management:MyVGM:
+  path: /dashboard/vgm/gestion-vgm/myVGM
+  controller: App\Controller\App\vgm\CertificatorController::getAllCreatedVgm
+
 dashboard-local:vgm:otherAdmin:index:
   path: /dashboard/vgm/gestion-agents/
   controller: App\Controller\App\vgm\OthersAdminController::index
@@ -138,6 +150,31 @@ dashboard-local:vgm:validatorUser:index:
 
 ###for local
 
+###StartE_xportatorPart
+
+dashboard-local:vgm:exportateur:index:
+  path: /dashboard/exportator/
+  controller: App\Controller\App\base\ClientController::exportatorIndex
+
+dashboard-local:vgm:exportateur:myVgm:
+  path: /dashboard/exportator/mes-certificats
+  controller: App\Controller\App\base\ClientController::exportatorVgmList
+
+dashboard-local:vgm:exportateur:account:
+  path: /dashboard/exportator/account
+  controller: App\Controller\App\base\ClientController::exportatorAccount
+
+dashboard-local:vgm:exportateur:buyPoint:
+  path: /dashboard/exportator/buy-point
+  controller: App\Controller\App\base\ClientController::buyPoint
+dashboard-local:vgm:exportateur:payVgm:
+  path: /dashboard/exportator/pay/{id}/vgm
+  controller: App\Controller\App\base\ClientController::payVgm
+
+dashboard-local:vgm:exportateur:updatePaymentMethod:
+  path: /dashboard/exportator/updatePayMethod
+  controller: App\Controller\App\base\ClientController::updatePayMethod
+
 dashboard-local:container:index:
   path: /dashboard/vgm/containerList/
   controller: App\Controller\App\vgm\OthersAdminController::validatorIndex
@@ -159,6 +196,18 @@ dashboard-local:login:
 dashboard-local:index:
   path: /dashboard/local-admin
   controller: App\Controller\local\LocalAdminController::index
+
+
+dashboard-local:vgm:controller:index:
+  path: /dashboard/vgm/controller/index
+  controller: App\Controller\App\vgm\OthersAdminController::controllerIndex
+dashboard-local:container:searchContainer:
+    path: /dashboard/container
+    controller: App\Controller\App\vgm\OthersAdminController::controllerIndex
+
+dashboard-local:vgm:validateAndControl:
+  path: /dashboard/vgm/{id}/validate-contole
+  controller: App\Controller\App\vgm\OthersAdminController::validateControle
 
 logout:
   path: /logout

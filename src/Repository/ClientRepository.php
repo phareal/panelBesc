@@ -47,4 +47,24 @@ class ClientRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getAllExportator(){
+        return $this->createQueryBuilder('exportator')
+            ->select('exportator.label','exportator.ifu','exportator.id')
+            ->innerJoin('exportator.role','clientRole')
+            ->where('clientRole.id = 8')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function getClientData($username){
+        return $this->createQueryBuilder('client')
+            ->select('client.username','client.id','client.password','role.label')
+            ->innerJoin("client.role",'role')
+            ->where('client.username = :username')
+            ->setParameter('username',$username)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

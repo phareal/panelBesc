@@ -2,15 +2,17 @@
 
 namespace App\Entity;
 
+
+use App\Entity\VgModule\Vgm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdminRepository")
- * @ORM\Entity
  * @ORM\Table(name="admin")
  */
 class Admin implements UserInterface,\Serializable
@@ -55,6 +57,21 @@ class Admin implements UserInterface,\Serializable
     private $otherAdmins;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VgModule\Vgm", mappedBy="admin")
+     */
+    private $vgms;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VgModule\Vgm", mappedBy="validator")
+     */
+    private $validatedVgms;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PointsPurchase", mappedBy="seller")
+     */
+    private $pointsPurchases;
+
+    /**
      * @return mixed
      */
     public function getModule()
@@ -77,6 +94,9 @@ class Admin implements UserInterface,\Serializable
     {
         $this->modules=new ArrayCollection();
         $this->otherAdmins = new ArrayCollection();
+        $this->vGMs = new ArrayCollection();
+        $this->validatedVgms = new ArrayCollection();
+        $this->pointsPurchases = new ArrayCollection();
     }
 
     /**
@@ -188,6 +208,99 @@ class Admin implements UserInterface,\Serializable
             // set the owning side to null (unless already changed)
             if ($otherAdmin->getAdmin() === $this) {
                 $otherAdmin->setAdmin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VGM[]
+     */
+    public function getVGMs(): Collection
+    {
+        return $this->vGMs;
+    }
+
+    public function addVGM(Vgm $vGM): self
+    {
+        if (!$this->vGMs->contains($vGM)) {
+            $this->vGMs[] = $vGM;
+            $vGM->setAdmin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVGM(VGM $vGM): self
+    {
+        if ($this->vGMs->contains($vGM)) {
+            $this->vGMs->removeElement($vGM);
+            // set the owning side to null (unless already changed)
+            if ($vGM->getAdmin() === $this) {
+                $vGM->setAdmin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VGM[]
+     */
+    public function getValidatedVgms(): Collection
+    {
+        return $this->validatedVgms;
+    }
+
+    public function addValidatedVgm(VGM $validatedVgm): self
+    {
+        if (!$this->validatedVgms->contains($validatedVgm)) {
+            $this->validatedVgms[] = $validatedVgm;
+            $validatedVgm->setValidator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeValidatedVgm(VGM $validatedVgm): self
+    {
+        if ($this->validatedVgms->contains($validatedVgm)) {
+            $this->validatedVgms->removeElement($validatedVgm);
+            // set the owning side to null (unless already changed)
+            if ($validatedVgm->getValidator() === $this) {
+                $validatedVgm->setValidator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PointsPurchase[]
+     */
+    public function getPointsPurchases(): Collection
+    {
+        return $this->pointsPurchases;
+    }
+
+    public function addPointsPurchase(PointsPurchase $pointsPurchase): self
+    {
+        if (!$this->pointsPurchases->contains($pointsPurchase)) {
+            $this->pointsPurchases[] = $pointsPurchase;
+            $pointsPurchase->setSeller($this);
+        }
+
+        return $this;
+    }
+
+    public function removePointsPurchase(PointsPurchase $pointsPurchase): self
+    {
+        if ($this->pointsPurchases->contains($pointsPurchase)) {
+            $this->pointsPurchases->removeElement($pointsPurchase);
+            // set the owning side to null (unless already changed)
+            if ($pointsPurchase->getSeller() === $this) {
+                $pointsPurchase->setSeller(null);
             }
         }
 

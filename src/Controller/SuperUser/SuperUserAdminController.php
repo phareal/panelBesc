@@ -15,6 +15,7 @@ use App\Entity\Role;
 use App\Helpers\Helpers;
 use App\Repository\AdminRepository;
 use App\Repository\ArmateurRepository;
+use App\Repository\ClientRepository;
 use App\Repository\ContainerTypeRepository;
 use App\Repository\ConsignataireRepository;
 use App\Repository\CountryRepository;
@@ -82,6 +83,10 @@ class SuperUserAdminController extends AbstractController
      * @var ContainerTypeRepository
      */
     private $containerTypeRepository;
+    /**
+     * @var ClientRepository
+     */
+    private $clientRepository;
 
     public function __construct(RoleRepository $rolerepository,
                                 AdminRepository $adminRepository,
@@ -94,6 +99,7 @@ class SuperUserAdminController extends AbstractController
                                 ArmateurRepository $armateurRepository,
                                 DraftContainerRepository $draftContainerRepository,
                                 ContainerTypeRepository $containerTypeRepository,
+                                ClientRepository $clientRepository,
                                 ConsignataireRepository $consignataireRepository)
     {
         $this->roleRepository = $rolerepository;
@@ -109,15 +115,13 @@ class SuperUserAdminController extends AbstractController
         $this->armateurRepository = $armateurRepository;
         $this->draftContainerRepository = $draftContainerRepository;
         $this->containerTypeRepository = $containerTypeRepository;
+        $this->clientRepository = $clientRepository;
     }
 
     public function addcontainerType()
     {
     }
-    public function indexcontainerType()
-    {
-        return $this->render('admin/super_user_admin/containerType/index.html.twig');
-    }
+
 
 
     public function index()
@@ -143,29 +147,40 @@ class SuperUserAdminController extends AbstractController
     {
 
         $formData = json_decode($request->getContent(), true);
-        $admin = new Admin();
-        $admin->setUsername($formData['username']);
-        $admin->setPassword($userPasswordEncoder->encodePassword($admin, $formData['password']));
 
-        $role = $this->roleRepository->find($formData['role_id']);
-        $module=$this->moduleRepository->find($formData['module_id']);
-        $admin->setRole($role);
-        $this->objectManager->persist($admin);
-        $this->objectManager->flush();
+        $checkUser=$this->adminRepository->findBy([
+            'username'=>$formData['username']
+        ]);
 
-        if ($formData['module_id']!=0){
-
-            $admin->setModule($module);
-            $this->objectManager->persist($admin);
-            $this->objectManager->flush();
+        if ($checkUser){
+            $this->addFlash('warning','Un utilisateur existe deja avec ce username');
+            return $this->redirectToRoute('dashboard-su-user:add');
         }else{
+            $admin = new Admin();
+            $admin->setUsername($formData['username']);
+            $admin->setPassword($userPasswordEncoder->encodePassword($admin, $formData['password']));
+
+            $role = $this->roleRepository->find($formData['role_id']);
+            $module=$this->moduleRepository->find($formData['module_id']);
+            $admin->setRole($role);
             $this->objectManager->persist($admin);
             $this->objectManager->flush();
+
+            if ($formData['module_id']!=0){
+
+                $admin->setModule($module);
+                $this->objectManager->persist($admin);
+                $this->objectManager->flush();
+            }else{
+                $this->objectManager->persist($admin);
+                $this->objectManager->flush();
+            }
+
+            return $this->json([
+                'code' => 200
+            ]);
         }
 
-        return $this->json([
-            'code' => 200
-        ]);
 
     }
 
@@ -225,6 +240,61 @@ class SuperUserAdminController extends AbstractController
         return $this->render('admin/super_user_admin/consignataire/index.html.twig',compact('ports','consignataires','roles'));
     }
 
+    public function exportateursIndex(Request $request){
+        if ($request->isMethod("POST")){
+            //recuperation du role
+            //chercher si un gars existe deja avec ce username
+            $formData=$request->request;
+            $checkExport=$this->clientRepository->findBy([
+                'username'=>$formData->get('username')
+            ]);
+            if ($checkExport){
+                $this->addFlash('danger','Un utilisateur existe deja avec ce nom d\'utilisateur');
+                return $this->redirectToRoute('dashboard-su-user:exportateurs:index');
+            }else{
+                //check user with label and ifu
+
+                $checkIfu=$this->clientRepository->findBy(['ifu'=>$formData->get('ifu')]);
+                $checkLabel=$this->clientRepository->findBy(['label'=>$formData->get('export_label')]);
+
+                if ($checkLabel){
+                    $this->addFlash('danger','Veuillez verifier si ce label  n\'est pas deja utilisé par un utilisateur dans la base' );
+                    return $this->redirectToRoute('dashboard-su-user:exportateurs:index');
+                }else if($checkIfu){
+                    $this->addFlash('danger','Veuillez verifier si  ifu n\'est pas deja utilisé par un utilisateur dans la base' );
+                    return $this->redirectToRoute('dashboard-su-user:exportateurs:index');
+
+                }else{
+                    //procéder aux insertions dans la base de données
+                    $client=new Client();
+                    $role=$this->roleRepository->find(8);
+
+                    $client->setUsername($formData->get('username'));
+                    $client->setPassword($this->userPasswordEncoder->encodePassword($client,$formData->get('password')));
+                    $client->setLabel($formData->get('export_label'));
+                    $client->setIfu($formData->get('ifu'));
+                    $client->setPhoneTwo($formData->get('phone2'));
+                    $client->setPhoneOne($formData->get('phone1'));
+                    $client->setMail($formData->get('mail'));
+                    $client->setAddress($formData->get('addresse'));
+                    $client->setGps($formData->get('gps'));
+                    $client->setRole($role);
+                    $client->setEnseigneCol($formData->get('enseigne'));
+                    $this->objectManager->persist($client);
+                    $this->objectManager->flush();
+                    $this->addFlash('success','L\'exportateur a été ajouté avec succès' );
+                    return $this->redirectToRoute('dashboard-su-user:exportateurs:index');
+
+                }
+            }
+        }else{
+            $exportateurs=$this->clientRepository->getAllExportator();
+            return $this->render('admin/super_user_admin/consignataire/exportateurs.html.twig',compact('exportateurs'));
+
+        }
+
+    }
+
 
 
     public function getcountryList()
@@ -278,6 +348,31 @@ class SuperUserAdminController extends AbstractController
         }
         return $this->render('admin/super_user_admin/cargoType/index.html.twig',compact('types'));
     }
+
+    public function consignataireDetails(Request $request,$id,UserPasswordEncoderInterface $userPasswordEncoder)
+    {
+        $container=$this->consignataireRepository->getDetails($id);
+        if ($request->isMethod("POST")){
+            $data=$request->request;
+            $consignataire=$this->clientRepository->find($id);
+            $consignataire->setUsername($data->get('username'));
+            $consignataire->setPassword($userPasswordEncoder->encodePassword($consignataire,$data->get('password')));
+            $consignataire->setLabel($data->get('label'));
+            $consignataire->setIfu($data->get('ifu'));
+            $consignataire->setPhoneOne($data->get('phone1'));
+            $consignataire->setPhoneTwo($data->get('phone2'));
+            $consignataire->setMail($data->get('mail'));
+            $consignataire->setAddress($data->get('addresse'));
+            $consignataire->setGps($data->get('gps'));
+            $entityManager=$this->getDoctrine()->getManager();
+            $entityManager->persist($consignataire);
+            $entityManager->flush();
+
+            $this->addFlash("success","Mise aà jour effectuer avec success");
+            return $this->redirectToRoute('dashboard-su-user:consignataire:details',["id"=>$id]);
+        }
+        return $this->render('admin/super_user_admin/consignataire/details.html.twig',compact('container'));
+    }
     public function armateurAdd(Request $request)
     {
         $content=json_decode($request->getContent(),false);
@@ -306,37 +401,40 @@ class SuperUserAdminController extends AbstractController
 
 
     /*geestion des ports et armateurs*/
-    public function containerIndex()
+    public function containerIndex(Request $request)
     {
         $armateurs=$this->armateurRepository->getAll();
         $containers=$this->draftContainerRepository->customFindAll();
         $types=$this->containerTypeRepository->findAll();
+        if ($request->isMethod("POST")){
+           $this->insertConteneur($request);
+        }
         return $this->render('admin/super_user_admin/container/index.html.twig',compact('armateurs','containers','types'));
     }
 
-    public function insertConteneur(Request $request)
+    public function insertConteneur(Request $_request)
     {
-        $containerData=json_decode($request->getContent(),false);
 
+            $request=$_request->request;
         ##SEARCH
             $container=new DraftContainer();
-            $container->setContainerSize($containerData->containerSize);
-            $container->setTareWeight($containerData->tareWeight);
-            $container->setProprietaireCode($containerData->proprietaryCode);
-            $container->setGoodCode($containerData->groupCode);
-            $container->setRegisterNumber($containerData->registerNumber);
-            $container->setVerificationNumber($containerData->verificationCode);
-            $container->setIdentificationNumber(strtoupper(Helpers::generateIdentificationNumber()));
+            $container->setContainerSize($request->get('containerSize'));
+            $container->setTareWeight($request->get('tareWeight'));
+            $container->setProprietaireCode($request->get('proprietaryCode'));
+            $container->setGoodCode($request->get('groupCode'));
+            $container->setRegisterNumber($request->get('registerNumber'));
+            $container->setVerificationNumber($request->get('verificationCode'));
+            $container->setIdentificationNumber(Helpers::generateContainerIdentificationNumber($request->get('proprietaryCode'),
+                $request->get('groupCode'), $request->get('registerNumber'), $request->get('verificationCode')));
 
-            $containerType=$this->containerTypeRepository->find($containerData->containerType);
-            $armateur=$this->armateurRepository->find($containerData->armateur_id);
+            $containerType=$this->containerTypeRepository->find($request->get('cargoType'));
+            $armateur=$this->armateurRepository->find($request->get('armateur_id'));
             $container->setArmateur($armateur);
             $container->setContainer($containerType);
             $this->objectManager->persist($container);
             $this->objectManager->flush();
-            return $this->json([
-                'code'=>200
-            ]);
+            $this->addFlash('success','insertion effectué avec success');
+            return $this->redirectToRoute('dashboard-su-user:conteneur:index');
 
 
     }

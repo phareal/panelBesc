@@ -1,0 +1,135 @@
+{% extends 'admin/super_user_admin/index.html.twig' %}
+{% block content %}
+    <div class="body_scroll">
+        <div class="container-fluid">
+            {% for message  in app.flashes('danger')  %}
+                <div class="alert alert-danger">
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+            {% for message  in app.flashes('success')  %}
+                <div class="alert alert-sucess">
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+            <div class="row clearfix">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Ajout d'un nouvelle exportateur</strong>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <form method="post">
+                                <h2 class="card-inside-title">Informations de connexion</h2>
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <input type="text"  name="username" id="export_username" class="form-control" placeholder="Nom d'utilisateur">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" id="export_password" class="form-control" placeholder="Mot de passe">
+                                        </div>
+                                    </div>
+                                </div>
+                                <h2 class="card-inside-title">Informations de bases</h2>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text"  name="export_label" class="form-control" placeholder="Libellé">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="ifu" id="export_ifu" class="form-control" placeholder="IFU">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="phone1" id="client_phone1" class="form-control" placeholder="Phone 1">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="phone2" id="client_phone2" class="form-control" placeholder="Phone 2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" name="mail" id="client_mail" class="form-control" placeholder="mail">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" name="addresse" id="client_address" class="form-control" placeholder="addresse">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="gps" id="client_gps" class="form-control" placeholder="gps">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="enseigne" id="client_enseigne" placeholder="Enseigne">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <input type="submit" class="btn btn-success" value="AJouter l'exportateur" >
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Liste des exportateurs</strong>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-striped" >
+                                    <thead>
+                                    <tr>
+                                        <th>Libellé</th>
+                                        <th>Numero IFU</th>
+                                        <th>#</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if exportateurs|length >0  %}
+                                        {% for exportateur in exportateurs  %}
+                                            <tr>
+                                                <td>{{ exportateur.label }}</td>
+                                                <td>
+                                                    <a class="btn btn-success" href="/">
+                                                        <i class="zmdi zmdi-eye">Voir</i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        {% else  %}
+                                          <tr>
+                                             <p class="alert alert-info text-center">Aucun exportateur n'a été ajouté pour l'instant</p>
+                                          </tr>
+                                    {% endif %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,2 +1,2 @@
 #!/bin/sh
-rsync -av ./ businesspay@92.222.85.200:~/panelgestion.businesspay.online --include=public/.htaccess --include=vendor --exclude-from=.gitignore --exclude=".*" --exclude="composer.lock"
+rsync -av ./ businesspay@92.222.85.200:~/panelgestion.businesspay.online --include=public/.htaccess --include=vendor  --include=composer.json --exclude-from=.gitignore --exclude=".*" --exclude="composer.lock"

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\Vgm;
+namespace App\Entity\VgModule;
 
-use App\Entity\Vgm\Container;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,7 +28,7 @@ class DraftAttachment
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="VGM", inversedBy="attachments")
+     * @ORM\ManyToOne(targetEntity="Vgm", inversedBy="attachments")
      */
     private $vgm;
 

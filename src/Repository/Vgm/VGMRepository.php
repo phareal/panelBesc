@@ -2,25 +2,25 @@
 
 namespace App\Repository\Vgm;
 
-use App\Entity\Vgm\VGM;
+use App\Entity\VgModule\Vgm;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method VGM|null find($id, $lockMode = null, $lockVersion = null)
- * @method VGM|null findOneBy(array $criteria, array $orderBy = null)
- * @method VGM[]    findAll()
- * @method VGM[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Vgm|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Vgm|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Vgm[]    findAll()
+ * @method Vgm[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class VGMRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, VGM::class);
+        parent::__construct($registry, Vgm::class);
     }
 
     // /**
-    //  * @return VGM[] Returns an array of VGM objects
+    //  * @return VgModule[] Returns an array of VgModule objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class VGMRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?VGM
+    public function findOneBySomeField($value): ?VgModule
     {
         return $this->createQueryBuilder('v')
             ->andWhere('v.exampleField = :val')
@@ -48,7 +48,30 @@ class VGMRepository extends ServiceEntityRepository
     }
     */
 
-    public function getAllVGM(){
+    public function getAllVGM($id){
+        return $this->createQueryBuilder('vgm')
+            ->select('draft.identificationNumber','vgm.state','vgm.id')
+            ->innerJoin('vgm.container','container')
+            ->innerJoin('container.draft','draft')
+            ->innerJoin('vgm.admin','admin')
+            ->where('admin.id =:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllInQueueVGM(){
+        return $this->createQueryBuilder('vgm')
+            ->select('vgm.vgmNumber','vgm.state','vgm.id')
+            ->innerJoin('vgm.container','container')
+            ->innerJoin('container.draft','draft')
+            ->innerJoin('vgm.admin','admin')
+            ->where('vgm.state = 0')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllCustomVGM(){
         return $this->createQueryBuilder('vgm')
             ->select('draft.identificationNumber','vgm.state','vgm.id')
             ->innerJoin('vgm.container','container')
@@ -58,22 +81,61 @@ class VGMRepository extends ServiceEntityRepository
     }
 
 
+
     public function getSingleDetails($id){
 
         return $this->createQueryBuilder('vgm')
             ->select('vgm.id as id','vgm.state',
-                'draft.identificationNumber',
-                'pay_vgm.id as vgm_id',
-                'container.tvfDate','container.agreementNumber','container.driver','container.booking',
-                'container.companyId','container.consignee','container.netWeight','container.requestTime','certifyingOfficer.username')
+                'container.id as container_id',
+                'draft.tareWeight',
+                'client.id as exportator_id',
+                'draft.goodCode',
+                'container.agreementNumber',
+                'container.tvfDate','vgm.vgmNumber','container.driver','container.booking','container.truckNumber',
+                'container.companyId','client.label','container.netWeight','container.requestTime',
+                'certifyingOfficer.username as _certifyingOfficer')
             ->innerJoin('vgm.container','container')
             ->innerJoin('container.draft','draft')
             ->innerJoin('container.certifyingOfficer','certifyingOfficer')
-            ->leftJoin('vgm.payVgm','pay_vgm')
-            ->leftJoin('pay_vgm.client','client')
+            ->innerJoin('vgm.exportator','client')
             ->where('vgm.id = :id')
             ->setParameter('id',$id)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getAllMyVgm($id)
+    {
+        return $this->createQueryBuilder('vgm')
+            ->select('vgm.id as id','vgm.state','vgm.vgmNumber')
+            ->innerJoin('vgm.exportator','exportator')
+            ->where('exportator.id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getContainerByVgm($iden){
+        return $this->createQueryBuilder('vgm')
+            ->select('draft.identificationNumber','vgm.state','vgm.id')
+            ->innerJoin('vgm.container','container')
+            ->innerJoin('container.draft','draft')
+            ->innerJoin('vgm.payVgm','payVgm')
+            ->where('vgm.state = 2')
+            ->where('draft.identificationNumber = :iden')
+            ->setParameter('iden',$iden)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    public function getAllContainerByVgm(){
+        return $this->createQueryBuilder('vgm')
+            ->select('draft.identificationNumber','vgm.state','vgm.id')
+            ->innerJoin('vgm.container','container')
+            ->innerJoin('container.draft','draft')
+            ->innerJoin('vgm.payVgm','payVgm')
+            ->where('vgm.state = 2')
+            ->orWhere('vgm.state = 3')
+            ->getQuery()
+            ->getResult();
     }
 }

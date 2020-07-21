@@ -47,4 +47,40 @@ class ConsignataireRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getDetails($id)
+    {
+        return $this->createQueryBuilder('consignataire')
+            ->select('client.username',
+                'client.password',
+                'client.ifu',
+                'client.phoneOne',
+                'client.phoneTwo',
+                'client.mail',
+                'client.address',
+                'client.gps',
+                'client.enseigneCol',
+                'client.label')
+
+            ->innerJoin('consignataire.client','client')
+            ->where('client.id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+
+
+
+
+
+    public function findByClientId($id){
+
+    }
+
+    public function getConsignataire(){
+
+    }
+
+
+
 }

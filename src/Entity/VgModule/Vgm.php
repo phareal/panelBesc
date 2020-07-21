@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Entity\Vgm;
+namespace App\Entity\VgModule;
 
-use App\Entity\App\vgm\PayVgm;
+use App\Entity\Admin;
+use App\Entity\Client;
+
+use App\Entity\Container;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Vgm\VGMRepository")
  */
-class VGM
+class Vgm
 {
     /**
      * @ORM\Id()
@@ -25,20 +28,41 @@ class VGM
     private $state;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Vgm\Container", inversedBy="vGMs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Container", inversedBy="vGMs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $container;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Vgm\DraftAttachment", mappedBy="container")
+     * @ORM\OneToMany(targetEntity="DraftAttachment", mappedBy="container")
      */
     private $attachments;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\App\vgm\PayVgm", mappedBy="vgm", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="PayVgm", mappedBy="vgm", cascade={"persist", "remove"})
      */
     private $payVgm;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Admin", inversedBy="vgms")
+     */
+    private $admin;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Admin", inversedBy="validatedVgms")
+     */
+    private $validator;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="vgms")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $exportator;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $vgmNumber;
 
     public function __construct()
     {
@@ -117,4 +141,53 @@ class VGM
 
         return $this;
     }
+
+    public function getAdmin(): ?Admin
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(?Admin $admin): self
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    public function getValidator(): ?Admin
+    {
+        return $this->validator;
+    }
+
+    public function setValidator(?Admin $validator): self
+    {
+        $this->validator = $validator;
+
+        return $this;
+    }
+
+    public function getExportator(): ?Client
+    {
+        return $this->exportator;
+    }
+
+    public function setExportator(?Client $exportator): self
+    {
+        $this->exportator = $exportator;
+
+        return $this;
+    }
+
+    public function getVgmNumber(): ?string
+    {
+        return $this->vgmNumber;
+    }
+
+    public function setVgmNumber(string $vgmNumber): self
+    {
+        $this->vgmNumber = $vgmNumber;
+
+        return $this;
+    }
+
 }

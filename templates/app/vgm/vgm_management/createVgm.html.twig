@@ -33,35 +33,115 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="header">
-                        <h2>Ajout d'un nouveau VGM</h2>
+                        <h2>Ajout d'une nouvelle VGM</h2>
 
                     </div>
                     <div class="body">
                         <form method="post" enctype="multipart/form-data" id="createVGMForm">
                             <div class="form-group">
                                 <div class="row">
-                                    <label for="" class="col-form-label col-sm-6">
-                                       Numero d'identification du conteneur
+                                    <label for="" class="col-sm-6">
+                                        Exportateur
                                     </label>
-                                    <input type="text" id="searchBox" name="identificationNumber"  tabindex="1"  class=" form-control col-sm-6 typeahead">
+                                    <select class="select form-control col-sm-6 " name="consignee">
+
+                                        <option class="" value="0">Veuillez selectionnez l'exportateur</option>
+                                        {% if consignataires|length >0 %}
+                                            {% for consignataire in consignataires %}
+                                                <option value="{{ consignataire.id }}">{{ consignataire.label }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                            <option class="" value="0">Veuillez selectionnez le consignataire</option>
+                                            <option value="0" disabled>Aucun consignataire</option>
+                                        {% endif %}
+
+                                    </select>
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
-                                        Poids de la marchandise pesé
+                                        Numéro d'agrément de l'exportateur
+
                                     </label>
-                                    <input type="number" name="netWeight" class="form-control col-sm-6" id="netWeight">
+                                    <input type="text" name="agreementNumber" placeholder=" Agreement Number" class="form-control col-sm-6" id="agreementNumber">
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
-                                        Poids à vide du conteneur
+                                        Numéro DVT
                                     </label>
-                                    <input type="number"  name="tareWeight" class="form-control col-sm-6"  id="tareWeight">
+                                    <input type="text" name="dvtNumber" placeholder=" tvfNum" class="form-control col-sm-6" id="dvtNumber">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                        Date du DVT
+                                    </label>
+                                    <input type="date" name="dvtCreatedAt" placeholder="tvfDate" class="form-control col-sm-6" id="tvfDate">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                        Numéro de conteneur
+
+                                    </label>
+                                    <input type="text" class="form-control col-sm-6" id="searchBox" name="containerNum" placeholder="ContainerNum">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       CargoType
+                                    </label>
+                                    <select class="select form-control col-sm-6" name="cargoType">
+                                        <option value="0" default>Selectionnez le type de conteneur</option>
+                                        {% for conteneur in conteneurs  %}
+                                            <option value="{{ conteneur.id }}">{{conteneur.label}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                      containerSize
+                                    </label>
+                                    <select class="select col-sm-6 form-control" name="containerSize">
+                                        <option value="0" default>Veuillez selectionnez la taille du conteneur</option>
+                                        <option value="20">Conteneur de 20 Pieds</option>
+                                        <option value="40">Conteneur de 40 Pieds</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                       Poids Net
+                                    </label>
+                                    <input type="number" placeholder="netWeight" name="netWeight" class="form-control col-sm-6" id="netWeight">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                        Poids à vide
+
+                                    </label>
+                                    <input type="number"  placeholder="TareWeight" name="tareWeight" class="form-control col-sm-6"  id="tareWeight">
                                 </div>
 
                             </div>
@@ -77,134 +157,71 @@
                             <div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
+                                        Plomb
+
+                                    </label>
+                                    <input type="text" name="sealNum" placeholder="sealNum" class="form-control col-sm-6" id="waybill">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
                                         Numéro de connaissement
-                                    </label>
-                                    <input type="text" name="wayBill" class="form-control col-sm-6" id="waybill">
-                                </div>
 
-                            </div>
-                            <div class="form-group">
-                                {#TODO Type de conteneur#}
-                                <div class="row">
-                                    <label for="" class="col-sm-6">
-                                       Type de conteneur
                                     </label>
-                                    <input type="text"  name="cargoType" class="form-control col-sm-6" id="cargoType">
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                {#TODO select avec 20 Pieds 40 Pieds#}
-                                <div class="row">
-                                    <label for="" class="col-sm-6">
-                                       Taille du conteneur
-                                    </label>
-                                    <input type="text" name="containerSize" class="form-control col-sm-6"  id="containerSize">
+                                    <input type="text" name="wayBill" placeholder="WayBill" class="form-control col-sm-6" id="waybill">
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
-                                       Numéro de scellé (Plon)
+                                        Marchandises
                                     </label>
-                                    <input type="text" name="sealNumber" class="form-control col-sm-6" id="sealNumber">
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                {#TODO select box#}
-                                <div class="row">
-                                    <label for="" class="col-sm-6">
-                                       Nature de la marchandise
-                                    </label>
-                                    <input type="text" name="natureGoods" class="form-control col-sm-6"  id="natureOfGoods">
+                                    <input type="text"  placeholder="NatureOfGoods" name="natureOfGoods" class="form-control col-sm-6" id="cargoType">
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
-                                       Exportateur de la marchandise
+                                        Transporteur
                                     </label>
-                                    <input type="text" name="company" class="form-control col-sm-6"  id="company">
+                                    <input type="text" placeholder="Transporter" name="transporter" class="form-control col-sm-6" id="transporter">
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
-                                       Numéro d'agrément de l'exportateur
+                                        conducteur
                                     </label>
-                                    <input type="text" name="agreementNumber" class="form-control col-sm-6" id="agreementNumber">
+                                    <input type="text" name="driverInfo" placeholder="DriverInfo" class="form-control col-sm-6" id="driver">
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
-                                       Agent de collecte
+                                        Immatriculation
                                     </label>
-                                    <input type="text" name="certifyingOfficer" value="{{ app.user.username }}" class="form-control col-sm-6" id="certifyingOfficer">
-                                </div>
-
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <label for="" class="col-sm-6">
-                                       Identifiant du pont bascule
-                                    </label>
-                                    <input type="text" name="weightBride" class="form-control col-sm-6" id="weightbride">
+                                    <input type="text" name="truckNumber" placeholder="TruckNum" class="form-control col-sm-6" id="truckNumber">
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
-                                       Transporteur
+                                       Agent certificateur
                                     </label>
-                                    <input type="text" name="transporter" class="form-control col-sm-6" id="transporter">
+                                    <input type="text" disabled name="certifyingOfficer" value="{{ app.user.username }}" class="form-control col-sm-6" id="certifyingOfficer">
                                 </div>
 
                             </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <label for="" class="col-sm-6">
-                                       Conducteur
-                                    </label>
-                                    <input type="text" name="driver" class="form-control col-sm-6" id="driver">
-                                </div>
 
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <label for="" class="col-sm-6">
-                                       Immatriculation du camion
-                                    </label>
-                                    <input type="text" name="truckNumber" class="form-control col-sm-6" id="truckNumber">
-                                </div>
 
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <label for="" class="col-sm-6">
-                                       Numero du DVT dans la guce
-                                    </label>
-                                    <input type="text" name="dvtNumber" class="form-control col-sm-6" id="dvtNumber">
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <label for="" class="col-sm-6">
-                                     Date creation de la dvt
-                                    </label>
-                                    <input type="date" name="dvtCreatedAt" class="form-control col-sm-6" id="tvfDate">
-                                </div>
-
-                            </div>
-                            <div class="form-group">
+                            {#<div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
                                       Date de la pesée 1
@@ -221,11 +238,25 @@
                                     <input type="date" name="weightingDate2" class="form-control col-sm-6" id="weightingDate2">
                                 </div>
 
+                            </div>#}
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="" class="col-sm-6">
+                                        Pont bascule
+                                    </label>
+                                    <select class="select col-sm-6 form-control" name="weighBridge">
+                                        <option value="0" default>Veuillez selectionnez le pont bascule</option>
+                                        <option value="20">Conteneur de 20 Pieds</option>
+                                        <option value="40">Conteneur de 40 Pieds</option>
+                                    </select>
+                                </div>
+
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <label for="" class="col-sm-6">
-                                     Fichier attachés
+                                        Fichier attachés
                                     </label>
                                     <input type="file" multiple name="attachments[]" class="form-control-file col-sm-6"  id="attachment">
                                 </div>

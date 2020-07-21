@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RoleRepository")
  */
-class Role 
+class Role
 {
     /**
      * @ORM\Id()
@@ -20,6 +20,12 @@ class Role
      * @ORM\Column(type="string", length=255)
      */
     private $label;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Client", mappedBy="role")
+     */
+    private $clients;
+
 
     public function getId(): ?int
     {

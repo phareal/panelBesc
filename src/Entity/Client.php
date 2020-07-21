@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\App\vgm\PayVgm;
+use App\Entity\VgModule\Vgm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -68,12 +70,6 @@ class Client implements UserInterface, \Serializable
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Role")
-     */
-
-    private $roles;
-
-    /**
      * @ORM\Column(type="string",length=55)
      */
     private $username;
@@ -89,21 +85,39 @@ class Client implements UserInterface, \Serializable
     public $role;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Points", mappedBy="client")
-     */
-    private $points;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\App\vgm\PayVgm", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="App\Entity\VgModule\PayVgm", mappedBy="client")
      */
     private $payVgms;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VgModule\Vgm", mappedBy="exportator")
+     */
+    private $vgms;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $solde;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PointsPurchase", mappedBy="client")
+     */
+    private $pointsPurchases;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $payMethod;
+
+
 
     public function __construct()
     {
         $this->armateurs = new ArrayCollection();
-        $this->roles=new ArrayCollection();
         $this->points = new ArrayCollection();
         $this->payVgms = new ArrayCollection();
+        $this->vgms = new ArrayCollection();
+        $this->pointsPurchases = new ArrayCollection();
     }
 
     public function setUsername($username){
@@ -257,14 +271,6 @@ class Client implements UserInterface, \Serializable
         list($this->id, $this->username, $this->password,)=unserialize($serialized,['allowed_classes'=>false]);
     }
 
-    public function getRoles()
-    {
-        return array_unique([$this->role->getLabel()]);
-    }
-
-    public function setRoles($role){
-        $this->role=$role;
-    }
 
     public function getPassword()
     {
@@ -286,36 +292,7 @@ class Client implements UserInterface, \Serializable
 
     }
 
-    /**
-     * @return Collection|Points[]
-     */
-    public function getPoints(): Collection
-    {
-        return $this->points;
-    }
 
-    public function addPoint(Points $point): self
-    {
-        if (!$this->points->contains($point)) {
-            $this->points[] = $point;
-            $point->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removePoint(Points $point): self
-    {
-        if ($this->points->contains($point)) {
-            $this->points->removeElement($point);
-            // set the owning side to null (unless already changed)
-            if ($point->getClient() === $this) {
-                $point->setClient(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|PayVgm[]
@@ -325,28 +302,114 @@ class Client implements UserInterface, \Serializable
         return $this->payVgms;
     }
 
-    public function addPayVgm(PayVgm $payVgm): self
+    /**
+     * @return mixed
+     */
+    public function getRole()
     {
-        if (!$this->payVgms->contains($payVgm)) {
-            $this->payVgms[] = $payVgm;
-            $payVgm->setClient($this);
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role): void
+    {
+        $this->role = $role;
+    }
+
+    public function getRoles()
+    {
+       return array_unique([$this->role->getLabel()]);
+    }
+
+    /**
+     * @return Collection|Vgm[]
+     */
+    public function getVgms(): Collection
+    {
+        return $this->vgms;
+    }
+
+    public function addVgm(Vgm $vgm): self
+    {
+        if (!$this->vgms->contains($vgm)) {
+            $this->vgms[] = $vgm;
+            $vgm->setExportator($this);
         }
 
         return $this;
     }
 
-    public function removePayVgm(PayVgm $payVgm): self
+    public function removeVgm(Vgm $vgm): self
     {
-        if ($this->payVgms->contains($payVgm)) {
-            $this->payVgms->removeElement($payVgm);
+        if ($this->vgms->contains($vgm)) {
+            $this->vgms->removeElement($vgm);
             // set the owning side to null (unless already changed)
-            if ($payVgm->getClient() === $this) {
-                $payVgm->setClient(null);
+            if ($vgm->getExportator() === $this) {
+                $vgm->setExportator(null);
             }
         }
 
         return $this;
     }
+
+    public function getSolde(): ?int
+    {
+        return $this->solde;
+    }
+
+    public function setSolde(?int $solde): self
+    {
+        $this->solde = $solde;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PointsPurchase[]
+     */
+    public function getPointsPurchases(): Collection
+    {
+        return $this->pointsPurchases;
+    }
+
+    public function addPointsPurchase(PointsPurchase $pointsPurchase): self
+    {
+        if (!$this->pointsPurchases->contains($pointsPurchase)) {
+            $this->pointsPurchases[] = $pointsPurchase;
+            $pointsPurchase->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removePointsPurchase(PointsPurchase $pointsPurchase): self
+    {
+        if ($this->pointsPurchases->contains($pointsPurchase)) {
+            $this->pointsPurchases->removeElement($pointsPurchase);
+            // set the owning side to null (unless already changed)
+            if ($pointsPurchase->getClient() === $this) {
+                $pointsPurchase->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPayMethod(): ?int
+    {
+        return $this->payMethod;
+    }
+
+    public function setPayMethod(?int $payMethod): self
+    {
+        $this->payMethod = $payMethod;
+
+        return $this;
+    }
+
+
 
 
 }

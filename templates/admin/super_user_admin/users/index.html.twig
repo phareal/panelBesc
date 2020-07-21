@@ -1,6 +1,12 @@
 {% extends 'admin/super_user_admin/index.html.twig' %}
 
 {% block content %}
+
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning">
+            <p>{{ message }}</p>
+        </div>
+    {% endfor %}
     <div class="block-header">
         <div class="row">
             <div class="col-lg-7 col-md-6 col-sm-12">

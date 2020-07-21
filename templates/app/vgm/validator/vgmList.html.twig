@@ -35,15 +35,16 @@
                         <table class="table">
                             <thead>
                                     <tr>
-                                        <th>Numero d'identification du conteneur</th>
+                                        <th>Numero d'identification de la VGM</th>
                                         <th>Etat</th>
                                         <th>Actions</th>
                                     </tr>
                             </thead>
                             <tbody>
                             {% for vgm in vgms %}
+
                                 <tr>
-                                    <td>{{ vgm.identificationNumber }}</td>
+                                    <td>{{ vgm.vgmNumber }}</td>
                                     <td>
                                         {% if vgm.state == 0 %}
                                             <span class="badge badge-warning">En attente de paiement</span>

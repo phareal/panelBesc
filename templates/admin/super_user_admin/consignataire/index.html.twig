@@ -142,6 +142,39 @@
                     </div>
                 </div>
             </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Liste des consignataires</strong>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-striped" >
+                                    <thead>
+                                        <tr>
+                                            <th>Libellé</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for consignataire in consignataires  %}
+                                         <tr>
+                                             <td>{{ consignataire.client.label }}</td>
+                                             <td>
+                                                 <a class="btn btn-success" href="{{ path('dashboard-su-user:consignataire:details',{'id':consignataire.client.id}) }}">
+                                                    <i class="zmdi zmdi-eye">Voir</i>
+                                                 </a>
+                                             </td>
+                                         </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

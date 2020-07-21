@@ -1,0 +1,84 @@
+{% extends 'admin/super_user_admin/index.html.twig' %}
+{% block content %}
+    <div class="row clearfix">
+        {% for message in app.flashes('success')%}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="alert alert-warning" role="alert">
+                <strong>Details</strong>
+            </div>
+            <div class="card">
+                <div class="body">
+                    <form method="post">
+                        <h2 class="card-inside-title">Informations de connexion</h2>
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input type="text"  name="username" value="{{ container.username }}" id="client_username" class="form-control" placeholder="Nom d'utilisateur">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="client_password" class="form-control" placeholder="Mot de passe">
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="card-inside-title">Informations de bases</h2>
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="label"  value="{{ container.label }}" id="client_label" class="form-control" placeholder="Libellé">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="ifu" id="client_ifu" value="{{ container.ifu }}" class="form-control" placeholder="IFU">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="phone1" id="client_phone1" value="{{ container.phoneOne }}" class="form-control" placeholder="Phone 1">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="phone2" id="client_phone2" value="{{ container.phoneTwo }}"class="form-control" placeholder="Phone 2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="mail" id="client_mail" value="{{ container.mail }}" class="form-control" placeholder="mail">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="addresse" id="client_address" value="{{ container.address }}" class="form-control" placeholder="addresse">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" name="gps" id="client_gps" value="{{ container.gps }}" class="form-control" placeholder="gps">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="client_enseigne" value="{{ container.enseigneCol }}" placeholder="Enseigne">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <input type="submit" class="btn btn-success" value="Editer le consignataire">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

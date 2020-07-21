@@ -52,7 +52,7 @@ class DraftContainerRepository extends ServiceEntityRepository
 
     public function customFindAll(){
         return $this->createQueryBuilder('draftContainer')
-            ->select('draftContainer.id','containerType.label','draftContainer.proprietaireCode','draftContainer.identificationNumber')
+            ->select('draftContainer.id','draftContainer.registerNumber','draftContainer.identificationNumber','containerType.label','draftContainer.proprietaireCode')
             ->innerJoin('draftContainer.armateur','armateur')
             ->innerJoin('draftContainer.container','containerType')
             ->getQuery()
@@ -91,6 +91,9 @@ class DraftContainerRepository extends ServiceEntityRepository
         } catch (NonUniqueResultException $e) {
         }
     }
+
+
+
 
 
 

@@ -1,0 +1,125 @@
+{% extends 'admin/customer/exportateurs/index.html.twig' %}
+
+{% block content %}
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Mon panel</h2>
+
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#"><i class="zmdi zmdi-home"></i> Gestion de mes vgms</a>
+                    </li>
+                </ul>
+                <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
+                            class="zmdi zmdi-sort-amount-desc"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Liste des VGMS</strong></h2>
+                        <ul class="header-dropdown">
+                            <li class="">
+                                <select class="form-control" id="paymentMethod">
+                                    <option value="0"  selected>Veuillez selectionner le mode de paiement désiré</option>
+                                    <option value="1">Paiement à la demande</option>
+                                    <option value="2">Paiement automatique</option>
+                                </select>
+
+                            </li>
+                            <button class="btn btn-success" id="paymentMethodAction">
+                                Selectionner
+                            </button>
+                        </ul>
+                        <div class="body my-4">
+                            <p>Consultez la liste des armateurs disponible</p>
+                            <div></div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+
+                                        <th>Numéro de la VGM</th>
+                                        <th>Etat</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for vgm in vgms %}
+
+                                        <tr>
+                                            <td>{{ vgm.vgmNumber }}</td>
+                                            <td>
+                                                {% if vgm.state == 0 %}
+                                                    <p class="badge badge-info">En attente de paiement</p>
+                                                {% elseif vgm.state == 1 %}
+                                                    <p class="badge badge-success">Paiement effectué</p>
+                                                {% elseif vgm.state == 2 %}
+                                                    <h3 class="badge badge-success" style="font-size: 15px">Validation effectué</h3>
+                                                {% elseif vgm.state == -1 %}
+                                                    <p class="badge badge-danger">Validation refusé</p>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{{ path('dashboard-local:vgm:validaror:vgmDetail',{'id':vgm.id}) }}"
+                                                   class="btn btn-info">
+                                                    Voir
+                                                    <i class="zmdi zmdi-eye"></i>
+                                                </a>
+                                                {% if client.payMethod == 1 %}
+                                                    <button class="btn btn-success" value="Payer" onclick="showAlert({{ vgm.id }})" >
+                                                        <i class="zmdi zmdi-paypal"></i>
+                                                    </button>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.querySelector("#paymentMethodAction").addEventListener('click',function () {
+                fetch('/dashboard/exportator/updatePayMethod',{
+                    method:"POST",
+                    body:JSON.stringify(document.querySelector("#paymentMethod").value)
+                }).then(success=>{
+
+                    swal({
+                            title: "Confirmation",
+                            text: "Votre mode de reglement a bien été changé",
+                            showConfirmButton: false,
+                            buttons: {
+                                confirm: {
+                                    value:"ok"
+                                },
+                            }
+                        }
+                    ).then((value => {
+                        if (value==="ok"){
+                           window.location.reload()
+                        }
+                    }));
+                }).catch(failure=>{
+
+                })
+        })
+    </script>
+
+
+{% endblock %}
+
+

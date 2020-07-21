@@ -12,7 +12,7 @@
                 <ul class="list" style="overflow: hidden; width: auto; height: calc(100vh - 65px);">
                     <li>
                         <div class="user-info">
-                            <a class="image waves-effect waves-block" href="profile.html">
+                            <a class="image waves-effect waves-block" href="#">
                                 <img src="{{ asset('assets/images/account.png') }}" alt="User">
                             </a>
                             <div class="detail">
@@ -21,10 +21,6 @@
                             </div>
                         </div>
                     </li>
-                    <li class="active open">
-                        <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
-                            <i class="zmdi zmdi-home"></i><span>Dashboard</span></a>
-                    </li>
                     <li>
 
                     <li>
@@ -32,18 +28,21 @@
                             <i class="zmdi zmdi-grid"></i><span>VGM</span></a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{{ path('dashboard-local:vgm:management:index') }}">Liste des VGM</a>
+                                <a href="{{ path('dashboard-local:vgm:management:MyVGM') }}">Liste des VGM</a>
                             </li>
                             <li>
                                 <a href="{{ path('dashboard-local:vgm:management:createIndex') }}">Creer une VGM</a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="{{ path('dashboard-local:vgm:otherAdmin:index') }}" class="menu-toggle">
-                            <i class="zmdi zmdi-grid"></i><span>Configurations de base</span></a>
-                    </li>
-                    <li class="open">
+                    {% if is_granted('local administrator') == false %}
+                        <li>
+                            <a href="{{ path('dashboard-local:vgm:otherAdmin:index') }}" class="menu-toggle">
+                                <i class="zmdi zmdi-grid"></i><span>Configurations de base</span></a>
+                        </li>
+                    {% endif %}
+
+                    {#<li class="open">
                         <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-accounts-list"></i><span>Conteneurs</span></a>
                     </li>
@@ -58,7 +57,7 @@
                     <li class="open">
                         <a href="{{ path('dashboard-su:index') }}" class="toggled waves-effect waves-block">
                             <i class="zmdi zmdi-accounts-list"></i><span>Armateurs</span></a>
-                    </li>
+                    </li>#}
                     <li>
                 </ul>
             </div>

@@ -1,0 +1,146 @@
+{% extends 'admin/customer/exportateurs/index.html.twig' %}
+
+{% block content %}
+
+    {% for message  in app.flashes('success')  %}
+            <div class="alert alert-success">
+                <p class="text-center">{{ message }}</p>
+            </div>
+    {% endfor %}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <h2>Mon panel</h2>
+
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#"><i class="zmdi zmdi-home"></i> Gestion de mon compte</a>
+                </li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i
+                        class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2> <strong>Mon solde</strong></h2>
+                    <ul class="header-dropdown">
+                        <li class="badge-success">
+                            <a role="button" class="" data-toggle="modal" data-target="#payPoint">
+                                <i class="zmdi zmdi-paypal bg-success"></i>
+                                     Payer des points
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                   <div class="table-responsive">
+                       <table class="table">
+                           <thead>
+                                <tr>
+                                    <th>Date d'achat</th>
+                                    <th>Nombre de points achetés</th>
+                                    <th>Vendus par</th>
+                                </tr>
+                           </thead>
+                           <tbody>
+                           {% for purchase in purchases  %}
+                               <tr>
+                                   <td>{{purchase.buyAt | format_datetime(locale='fr') }}</td>
+                                   <td>{{ purchase.buyPoint }}</td>
+                                   <td>{{ purchase.username }}</td>
+                               </tr>
+                           {% endfor %}
+                           </tbody>
+                           <tfoot>
+                                <tr>
+                                    <td>Solde de points: <p class="badge badge-info" style="font-size: 15px">{{ solde }}</p> </td>
+                                </tr>
+                           </tfoot>
+                       </table>
+                   </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2> <strong>Historique des dépenses</strong></h2>
+                </div>
+                <div class="body">
+                   <div class="table-responsive">
+                       <table class="table">
+                           <thead>
+                                <tr>
+                                    <th>Date de consommation</th>
+                                    <th>Nombre de points consommés</th>
+                                    <th>Actions effectués</th>
+                                </tr>
+                           </thead>
+                           <tbody>
+
+                           </tbody>
+                       </table>
+                   </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2> <strong>Parametres de compte</strong></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <div class="modal fade" id="payPoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Payer des points</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{{ path('dashboard-local:vgm:exportateur:buyPoint') }}" method="post">
+                <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="" class="col-form-label col-sm-6">Nombre de points à acheter</label>
+                            <div class="col-sm-6">
+                                <input type="number" name="point" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-form-label col-sm-6">Vendeurs</label>
+                            <div class="col-sm-6">
+                                <select name="seller" class="form-control" id="">
+                                    <option value="0" >Selectionnez le vendeur</option>
+                                    {% for caissier in caissiers  %}
+                                        <option value="{{ caissier.id }}">{{ caissier.username }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Acheter
+                        <i class="zmdi zmdi-balance-wallet"></i>
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div
+{% endblock %}

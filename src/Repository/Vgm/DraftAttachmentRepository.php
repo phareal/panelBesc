@@ -2,7 +2,7 @@
 
 namespace App\Repository\Vgm;
 
-use App\Entity\Vgm\DraftAttachment;
+use App\Entity\VgModule\DraftAttachment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

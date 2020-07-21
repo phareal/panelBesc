@@ -7,6 +7,7 @@ namespace App\Controller;
 
 use App\Repository\AdminRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +55,12 @@ class AdminController extends AbstractController
                 }elseif ($module ==2){
                     return $this->redirectToRoute('dashboard-local:index');
                 }
+            }elseif ($roles[0] == "ROLE_EXPORTATEUR"){
+               return  $this->redirectToRoute('dashboard-local:vgm:exportateur:index');
+            }elseif ($roles[0] == "ROLE_CAISSIER"){
+                return  $this->redirectToRoute('dashboard-local:vgm:exportateur:index');
+            }elseif ($roles[0] == "ROLE_CONTROLLER"){
+               return  $this->redirectToRoute('dashboard-local:vgm:controller:index');
             }
           /*  switch ($roles[0]){
                 case "ROLE_SUPER":

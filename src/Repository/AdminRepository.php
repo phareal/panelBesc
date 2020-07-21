@@ -36,6 +36,15 @@ class AdminRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getAllCaissier(){
+        return $this->createQueryBuilder('caissier')
+            ->select('caissier.id','caissier.username')
+            ->innerJoin('caissier.role','role')
+            ->where('role.id = 11')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Admin[] Returns an array of Admin objects
     //  */
@@ -64,4 +73,14 @@ class AdminRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getClientData($username)
+    {
+        return $this->createQueryBuilder('admin')
+            ->select('admin.username','admin.id','admin.password','role.label')
+            ->innerJoin("admin.role",'role')
+            ->where('admin.username = :username')
+            ->setParameter('username',$username)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

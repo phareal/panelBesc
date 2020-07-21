@@ -1,3 +1,4 @@
+
 let btn_addUser = document.querySelector("#btn_addUser")
 btn_addUser.addEventListener("click", function () {
     /*
@@ -21,7 +22,7 @@ btn_addUser.addEventListener("click", function () {
         body: JSON.stringify(data)
     })
         .then(success => {
-
+            window.location.reload()
         })
         .catch(failure => {
             console.log(failure)
@@ -157,7 +158,7 @@ function addContainer() {
         method:"POST",
         body:JSON.stringify(body)
     }).then(success=>{
-        window.location.reload()
+
     }).catch(failure=>{
 
     })
@@ -179,6 +180,29 @@ function saveAgent() {
         }
 
     })
+}
+
+function showAlert(id) {
+    swal({
+        title: "Etes-vous sure?",
+        text: "Voulez vous confirmez le paiement de cette vgm ?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                fetch('/dashboard/exportator/pay/'+id+'/vgm')
+                    .then(sucess=>{
+                        swal("Super! Le paiement de votre vgm a bien été validé", {
+                            icon: "success",
+                        });
+                    })
+
+            } else {
+                swal("Confirmation de paiement annulé");
+            }
+        });
 }
 
 

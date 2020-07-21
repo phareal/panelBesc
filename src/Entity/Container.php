@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Entity\Vgm;
+namespace App\Entity;
 
 
-use App\Entity\Vgm\DraftAttachment;
+use App\Entity\VgModule\DraftAttachment;
+use App\Entity\VgModule\Vgm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ConteneurRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\App\vgm\ContainerRepository")
  */
 class Container
 {
@@ -67,10 +68,6 @@ class Container
      */
     private $certifyingOfficer;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Admin")
-     */
-    private $validatingOfficer;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -127,10 +124,13 @@ class Container
     private $companyId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Vgm\VGM", mappedBy="container")
+     * @ORM\OneToMany(targetEntity="App\Entity\VgModule\Vgm", mappedBy="container")
      */
     private $vGMs;
-
+    /**
+     * @ORM\Column(type="string",length=255,nullable=true)
+     */
+    private $company;
 
 
     public function __construct()
@@ -180,17 +180,6 @@ class Container
         return $this;
     }
 
-    public function getTareWeight(): ?string
-    {
-        return $this->tareWeight;
-    }
-
-    public function setTareWeight(string $tareWeight): self
-    {
-        $this->tareWeight = $tareWeight;
-
-        return $this;
-    }
 
     public function getBooking(): ?string
     {
@@ -493,12 +482,12 @@ class Container
         $this->draft = $draft;
     }
 
-    public function getVGM(): ?VGM
+    public function getVGM(): ?Vgm
     {
         return $this->vGM;
     }
 
-    public function setVGM(?VGM $vGM): self
+    public function setVGM(?Vgm $vGM): self
     {
         $this->vGM = $vGM;
 
@@ -506,14 +495,14 @@ class Container
     }
 
     /**
-     * @return Collection|VGM[]
+     * @return Collection|Vgm[]
      */
     public function getVGMs(): Collection
     {
         return $this->vGMs;
     }
 
-    public function addVGM(VGM $vGM): self
+    public function addVGM(Vgm $vGM): self
     {
         if (!$this->vGMs->contains($vGM)) {
             $this->vGMs[] = $vGM;
@@ -523,7 +512,7 @@ class Container
         return $this;
     }
 
-    public function removeVGM(VGM $vGM): self
+    public function removeVGM(Vgm $vGM): self
     {
         if ($this->vGMs->contains($vGM)) {
             $this->vGMs->removeElement($vGM);
